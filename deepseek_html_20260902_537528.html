@@ -1,0 +1,3058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISLAMIC BUSINESS OS — Business Management, Built Around Islamic Principles.</title>
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #eeeeee;
+            --gray-300: #e0e0e0;
+            --gray-400: #bdbdbd;
+            --gray-500: #9e9e9e;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+            --border: var(--gray-300);
+            --border-light: var(--gray-200);
+            --text-primary: var(--black);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --bg-subtle: var(--gray-50);
+            --bg-card: var(--white);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --sidebar-width: 264px;
+            --header-height: 64px;
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--white);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--gray-50);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.625rem 0.75rem;
+            width: 100%;
+            outline: none;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--text-primary);
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--gray-800);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 0.375rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        h1 {
+            font-size: 1.75rem;
+            line-height: 1.2;
+        }
+        h2 {
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+        h3 {
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        .app-shell {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: var(--transition);
+            z-index: 50;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .sidebar.closed {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+        .sidebar-logo {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-light);
+            padding: 0 1rem;
+            flex-shrink: 0;
+            gap: 0.5rem;
+        }
+        .sidebar-logo svg {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .sidebar-logo span {
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+        .sidebar-nav {
+            flex: 1;
+            padding: 0.75rem 0;
+            overflow-y: auto;
+        }
+        .nav-section {
+            margin-bottom: 0.5rem;
+        }
+        .nav-section-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            padding: 0.75rem 1.25rem 0.375rem;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border-radius: 0;
+        }
+        .nav-item:hover {
+            background: var(--gray-50);
+            color: var(--text-primary);
+        }
+        .nav-item.active {
+            background: var(--gray-100);
+            color: var(--text-primary);
+            border-left-color: var(--black);
+            font-weight: 600;
+        }
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-width: 0;
+        }
+        .header {
+            height: var(--header-height);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            gap: 1rem;
+            flex-shrink: 0;
+            background: var(--white);
+            z-index: 40;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            background: none;
+            border: 1px solid var(--border-light);
+        }
+        .menu-toggle:hover {
+            background: var(--gray-50);
+            color: var(--text-primary);
+        }
+        .menu-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+        .header-search {
+            flex: 1;
+            max-width: 420px;
+            position: relative;
+        }
+        .header-search input {
+            padding-left: 2.25rem;
+            background: var(--gray-50);
+            border-color: var(--border-light);
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+        }
+        .header-search input:focus {
+            background: var(--white);
+            border-color: var(--gray-800);
+        }
+        .header-search svg {
+            position: absolute;
+            left: 0.625rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+        .header-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+            background: none;
+            position: relative;
+        }
+        .header-btn:hover {
+            background: var(--gray-50);
+            color: var(--text-primary);
+        }
+        .header-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .badge-dot {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 8px;
+            height: 8px;
+            background: var(--black);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--gray-900);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid var(--white);
+            box-shadow: 0 0 0 1px var(--border-light);
+            flex-shrink: 0;
+        }
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.75rem 2rem;
+            background: var(--bg-subtle);
+        }
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.25s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .page-header {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .page-header h1 {
+            margin-bottom: 0.25rem;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            max-width: 600px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.82rem;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+        }
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: var(--gray-800);
+        }
+        .btn-secondary {
+            background: var(--white);
+            color: var(--text-primary);
+            border-color: var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+        .btn-ghost {
+            background: none;
+            color: var(--text-secondary);
+            padding: 0.5rem 0.75rem;
+        }
+        .btn-ghost:hover {
+            background: var(--gray-50);
+            color: var(--text-primary);
+        }
+        .btn-danger {
+            background: var(--white);
+            color: var(--black);
+            border-color: var(--gray-300);
+        }
+        .btn-danger:hover {
+            border-color: var(--gray-600);
+            background: var(--gray-50);
+        }
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+        }
+        .btn-lg {
+            padding: 0.875rem 1.75rem;
+            font-size: 0.95rem;
+            border-radius: var(--radius-md);
+        }
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+        }
+        .grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .grid-6 {
+            grid-template-columns: repeat(6, 1fr);
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .card-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: -0.01em;
+        }
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .kpi-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .kpi-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 0.375rem;
+        }
+        .kpi-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .kpi-change {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .kpi-change.positive {
+            color: var(--text-primary);
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            background: var(--white);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+        th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-light);
+            background: var(--gray-50);
+            white-space: nowrap;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background: var(--gray-50);
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+        .status-badge.paid {
+            background: var(--gray-200);
+        }
+        .status-badge.pending {
+            background: var(--gray-100);
+        }
+        .status-badge.overdue {
+            background: var(--gray-900);
+            color: var(--white);
+        }
+        .status-badge.review {
+            background: var(--gray-800);
+            color: var(--white);
+        }
+        .status-badge.flagged {
+            background: var(--gray-700);
+            color: var(--white);
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInBg 0.2s ease;
+        }
+        @keyframes fadeInBg {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 560px;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: modalIn 0.25s ease;
+        }
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .modal.modal-lg {
+            max-width: 760px;
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .modal-header h2 {
+            font-size: 1.1rem;
+        }
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+        .modal-close:hover {
+            background: var(--gray-50);
+            color: var(--text-primary);
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.625rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+        .toast {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 0.875rem 1.25rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            animation: toastIn 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            max-width: 380px;
+        }
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .toast.success {
+            background: var(--gray-900);
+        }
+        .toast.error {
+            background: var(--gray-900);
+            border-left: 3px solid var(--gray-400);
+        }
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.3;
+            margin-bottom: 1rem;
+        }
+        .empty-state h3 {
+            color: var(--text-secondary);
+            margin-bottom: 0.375rem;
+        }
+        .empty-state p {
+            font-size: 0.82rem;
+            max-width: 320px;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+        }
+        .chart-container canvas,
+        .chart-container svg {
+            width: 100%;
+            height: 100%;
+        }
+        .tabs {
+            display: flex;
+            gap: 0.25rem;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 0.625rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            background: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .tab:hover {
+            color: var(--text-primary);
+        }
+        .tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--black);
+            font-weight: 600;
+        }
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            flex: 1;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--black);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+        .score-ring {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .score-ring svg {
+            position: absolute;
+            inset: 0;
+        }
+        .score-ring .score-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            z-index: 1;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: var(--gray-100);
+            color: var(--text-secondary);
+        }
+        .badge.dark {
+            background: var(--gray-900);
+            color: var(--white);
+        }
+        .disclaimer-box {
+            background: var(--gray-50);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 0.875rem 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            max-height: 320px;
+            overflow-y: auto;
+            margin-top: 0.375rem;
+            z-index: 80;
+            display: none;
+        }
+        .search-results.active {
+            display: block;
+        }
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 0.625rem 0.875rem;
+            cursor: pointer;
+            font-size: 0.82rem;
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition);
+            width: 100%;
+            text-align: left;
+            background: none;
+        }
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        .search-result-item:hover {
+            background: var(--gray-50);
+        }
+        .tag {
+            display: inline-flex;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: var(--gray-100);
+            color: var(--text-secondary);
+        }
+        .phone-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--border-light);
+            z-index: 60;
+            padding: 0.375rem 0;
+            overflow-x: auto;
+        }
+        .phone-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.125rem;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            background: none;
+            border: none;
+            min-width: 52px;
+            flex-shrink: 0;
+        }
+        .phone-nav-item.active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .phone-nav-item svg {
+            width: 20px;
+            height: 20px;
+        }
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 45;
+        }
+        .sidebar-backdrop.active {
+            display: block;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 1rem 0;
+        }
+        .text-muted {
+            color: var(--text-muted);
+        }
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+        .text-sm {
+            font-size: 0.82rem;
+        }
+        .font-bold {
+            font-weight: 700;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gap-1 {
+            gap: 0.5rem;
+        }
+        .gap-2 {
+            gap: 1rem;
+        }
+        .mb-1 {
+            margin-bottom: 0.5rem;
+        }
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+        .mt-1 {
+            margin-top: 0.5rem;
+        }
+        .mt-2 {
+            margin-top: 1rem;
+        }
+        .mt-3 {
+            margin-top: 1.5rem;
+        }
+        .w-full {
+            width: 100%;
+        }
+        @media (max-width: 1024px) {
+            .grid-4,
+            .grid-6 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .content-area {
+                padding: 1.25rem 1rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 50;
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-backdrop {
+                display: block;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .grid-6 {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                padding: 0 0.875rem;
+            }
+            .header-search {
+                max-width: 160px;
+            }
+            .content-area {
+                padding: 1rem 0.875rem 5rem;
+            }
+            .kpi-value {
+                font-size: 1.35rem;
+            }
+            .phone-nav {
+                display: flex;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .modal {
+                width: 95%;
+                max-width: 95%;
+            }
+            .page-header h1 {
+                font-size: 1.35rem;
+            }
+            .table-wrapper {
+                font-size: 0.75rem;
+            }
+            th,
+            td {
+                padding: 0.5rem 0.625rem;
+            }
+        }
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none;
+            }
+            .phone-nav {
+                display: none;
+            }
+        }
+        .landing-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+        .landing-hero {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            padding: 4rem 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .landing-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: -0.03em;
+            max-width: 800px;
+        }
+        .landing-hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        .landing-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            padding: 3rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .landing-feature-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: left;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .landing-feature-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .landing-feature-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        .landing-feature-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .landing-footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        .login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: var(--gray-50);
+            padding: 2rem;
+        }
+        .login-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow-lg);
+        }
+        .login-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .login-logo svg {
+            width: 36px;
+            height: 36px;
+        }
+        .login-logo span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .login-card h1 {
+            text-align: center;
+            font-size: 1.25rem;
+            margin-bottom: 0.375rem;
+        }
+        .login-card p.subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== APPLICATION SHELL ==================== -->
+    <div id="appShell" class="app-shell" style="display:none;">
+        <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar(false)"></div>
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="24" height="24" rx="4" stroke="#000" stroke-width="2"/><path d="M10 16L14 20L22 12" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>ISLAMIC BUSINESS OS</span>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav"></nav>
+        </aside>
+        <!-- MAIN AREA -->
+        <div class="main-area">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()" title="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+                </div>
+                <div class="header-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="globalSearchInput" placeholder="Search customers, products, invoices..." autocomplete="off" oninput="handleGlobalSearch(this.value)" onfocus="handleGlobalSearch(this.value)" />
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="header-right">
+                    <button class="header-btn" onclick="showNotifications()" title="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="badge-dot"></span></button>
+                    <button class="header-btn" onclick="navigateTo('settings')" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></button>
+                    <div class="user-avatar" onclick="navigateTo('profile')" title="Ahmed">A</div>
+                </div>
+            </header>
+            <!-- CONTENT -->
+            <main class="content-area" id="contentArea"></main>
+        </div>
+        <!-- PHONE NAV -->
+        <div class="phone-nav" id="phoneNav"></div>
+    </div>
+
+    <!-- ==================== LOGIN PAGE ==================== -->
+    <div id="loginPage" class="login-page" style="display:flex;">
+        <div class="login-card">
+            <div class="login-logo">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="24" height="24" rx="4" stroke="#000" stroke-width="2"/><path d="M10 16L14 20L22 12" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>ISLAMIC BUSINESS OS</span>
+            </div>
+            <h1>Welcome back</h1>
+            <p class="subtitle">Business Management, Built Around Islamic Principles.</p>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" value="ahmed@example.com" placeholder="you@business.com" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" value="demo1234" placeholder="••••••••" />
+            </div>
+            <div class="flex-between mb-2">
+                <label style="display:flex;align-items:center;gap:0.375rem;margin:0;cursor:pointer;"><input type="checkbox" id="rememberMe" checked style="width:auto;margin:0;" /> Remember me</label>
+                <button class="btn btn-ghost btn-sm" onclick="showToast('Password reset link sent','success')">Forgot Password?</button>
+            </div>
+            <button class="btn btn-primary w-full btn-lg" onclick="handleLogin()">Sign In</button>
+            <div class="divider"></div>
+            <button class="btn btn-secondary w-full" onclick="showToast('Google sign-in is for demo only','error')">Continue with Google</button>
+            <p class="text-center text-sm text-muted mt-2" style="text-align:center;font-size:0.75rem;">Don't have an account? <button class="btn btn-ghost btn-sm" onclick="showToast('Account creation is for demo only','error')">Create Account</button></p>
+        </div>
+    </div>
+
+    <!-- ==================== LANDING PAGE ==================== -->
+    <div id="landingPage" class="landing-page" style="display:none;">
+        <div class="landing-hero">
+            <div class="login-logo">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect x="4" y="4" width="24" height="24" rx="4" stroke="#000" stroke-width="2"/><path d="M10 16L14 20L22 12" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span style="font-size:1.25rem;">ISLAMIC BUSINESS OS</span>
+            </div>
+            <h1>Run Your Business.<br>Stay True to Your Principles.</h1>
+            <p>Business Management, Built Around Islamic Principles. Accounting, Inventory, Zakat, Sadaqah, Shariah Review and Financial Intelligence — all in one unified platform.</p>
+            <div class="flex gap-1" style="gap:0.75rem;flex-wrap:wrap;justify-content:center;">
+                <button class="btn btn-primary btn-lg" onclick="handleLogin()">Start Free</button>
+                <button class="btn btn-secondary btn-lg" onclick="showLandingFeatures()">Explore Platform</button>
+            </div>
+        </div>
+        <div class="landing-features" id="landingFeatures">
+            <div class="landing-feature-card"><h3>Accounting & Finance</h3><p>Complete financial management with P&L, Balance Sheet, Cash Flow and VAT compliance.</p></div>
+            <div class="landing-feature-card"><h3>Zakat Management</h3><p>Configurable Zakat calculation engine with Nisab, Hawl and multiple methodologies.</p></div>
+            <div class="landing-feature-card"><h3>Sadaqah Tracking</h3><p>Track and manage your charitable giving with detailed reports and analytics.</p></div>
+            <div class="landing-feature-card"><h3>Shariah Review</h3><p>Automated transaction flagging for potential Riba and Shariah concerns.</p></div>
+            <div class="landing-feature-card"><h3>Inventory & Sales</h3><p>Products, customers, suppliers, invoices and inventory management.</p></div>
+            <div class="landing-feature-card"><h3>Financial Intelligence</h3><p>Real-time dashboards, reports and AI-powered insights for your business.</p></div>
+        </div>
+        <div class="landing-footer">© 2026 ISLAMIC BUSINESS OS — Business Management, Built Around Islamic Principles.</div>
+    </div>
+
+    <!-- ==================== MODAL CONTAINER ==================== -->
+    <div id="modalContainer"></div>
+    <!-- ==================== TOAST CONTAINER ==================== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ================================================
+        // APPLICATION STATE
+        // ================================================
+        const AppState = {
+            currentRoute: 'dashboard',
+            isAuthenticated: false,
+            sidebarOpen: false,
+            currentModal: null,
+            searchTerm: '',
+            business: {
+                name: 'Amana Trading LLC',
+                country: 'United Arab Emirates',
+                currency: 'AED',
+                financialYear: '2026',
+                vatRate: 5,
+            },
+            user: {
+                name: 'Ahmed',
+                email: 'ahmed@example.com',
+                role: 'Owner',
+            },
+            filters: { category: 'all', status: 'all' },
+            notifications: [
+                { id: 1, text: 'Zakat calculation due in 14 days', time: '2 hours ago', unread: true },
+                { id: 2, text: '3 transactions require Shariah review', time: '5 hours ago', unread: true },
+                { id: 3, text: 'Inventory item "Leather Wallet" below minimum level', time: '1 day ago', unread: false },
+                { id: 4, text: '5 invoices overdue', time: '2 days ago', unread: false },
+                { id: 5, text: 'Monthly financial report ready', time: '3 days ago', unread: false },
+            ],
+        };
+
+        // ================================================
+        // ROUTER
+        // ================================================
+        const routes = {
+            dashboard: 'Dashboard',
+            sales: 'Sales',
+            invoices: 'Invoices',
+            customers: 'Customers',
+            purchases: 'Purchases',
+            suppliers: 'Suppliers',
+            expenses: 'Expenses',
+            inventory: 'Inventory',
+            products: 'Products',
+            employees: 'Employees',
+            accounts: 'Accounts',
+            transactions: 'Transactions',
+            cashflow: 'Cash Flow',
+            pl: 'Profit & Loss',
+            balancesheet: 'Balance Sheet',
+            finreports: 'Financial Reports',
+            zakat: 'Zakat',
+            sadaqah: 'Sadaqah',
+            shariahcheck: 'Shariah Check',
+            ribaawareness: 'Riba Awareness',
+            islamicfinhealth: 'Islamic Financial Health',
+            reports: 'Reports',
+            islamicreports: 'Islamic Finance Reports',
+            taxreports: 'Tax/VAT Reports',
+            audittrail: 'Audit Trail',
+            usersroles: 'Users & Roles',
+            businesssettings: 'Business Settings',
+            islamicsettings: 'Islamic Settings',
+            integrations: 'Integrations',
+            subscription: 'Subscription',
+            security: 'Security',
+            profile: 'User Profile',
+            blueprint: 'Product Blueprint',
+            aiassistant: 'AI Assistant',
+        };
+
+        const navSections = [
+            { label: 'Overview', items: [{ route: 'dashboard', label: 'Dashboard' }] },
+            {
+                label: 'Business',
+                items: [
+                    { route: 'sales', label: 'Sales' },
+                    { route: 'invoices', label: 'Invoices' },
+                    { route: 'customers', label: 'Customers' },
+                    { route: 'purchases', label: 'Purchases' },
+                    { route: 'suppliers', label: 'Suppliers' },
+                    { route: 'expenses', label: 'Expenses' },
+                    { route: 'inventory', label: 'Inventory' },
+                    { route: 'products', label: 'Products' },
+                    { route: 'employees', label: 'Employees' },
+                ]
+            },
+            {
+                label: 'Finance',
+                items: [
+                    { route: 'accounts', label: 'Accounts' },
+                    { route: 'transactions', label: 'Transactions' },
+                    { route: 'cashflow', label: 'Cash Flow' },
+                    { route: 'pl', label: 'Profit & Loss' },
+                    { route: 'balancesheet', label: 'Balance Sheet' },
+                    { route: 'finreports', label: 'Financial Reports' },
+                ]
+            },
+            {
+                label: 'Islamic Finance',
+                items: [
+                    { route: 'zakat', label: 'Zakat' },
+                    { route: 'sadaqah', label: 'Sadaqah' },
+                    { route: 'shariahcheck', label: 'Shariah Check' },
+                    { route: 'ribaawareness', label: 'Riba Awareness' },
+                    { route: 'islamicfinhealth', label: 'Islamic Financial Health' },
+                ]
+            },
+            {
+                label: 'Reports',
+                items: [
+                    { route: 'reports', label: 'Business Reports' },
+                    { route: 'islamicreports', label: 'Islamic Finance Reports' },
+                    { route: 'taxreports', label: 'Tax/VAT Reports' },
+                    { route: 'audittrail', label: 'Audit Trail' },
+                ]
+            },
+            {
+                label: 'Administration',
+                items: [
+                    { route: 'usersroles', label: 'Users & Roles' },
+                    { route: 'businesssettings', label: 'Business Settings' },
+                    { route: 'islamicsettings', label: 'Islamic Settings' },
+                    { route: 'integrations', label: 'Integrations' },
+                    { route: 'subscription', label: 'Subscription' },
+                    { route: 'security', label: 'Security' },
+                ]
+            },
+            { label: 'Other', items: [{ route: 'blueprint', label: 'Product Blueprint' }, { route: 'aiassistant',
+                    label: 'AI Assistant' }] },
+        ];
+
+        // ================================================
+        // DEMO DATABASE
+        // ================================================
+        const DemoDB = {
+            products: [
+                { id: 1, sku: 'SKU-1001', name: 'Leather Wallet', category: 'Accessories', stock: 45, cost: 35,
+                    price: 89, margin: '60.7%', status: 'In Stock' },
+                { id: 2, sku: 'SKU-1002', name: 'Stainless Steel Water Bottle', category: 'Kitchen', stock: 12, cost: 22,
+                    price: 55, margin: '60.0%', status: 'Low Stock' },
+                { id: 3, sku: 'SKU-1003', name: 'Organic Cotton T-Shirt', category: 'Apparel', stock: 78, cost: 18,
+                    price: 45, margin: '60.0%', status: 'In Stock' },
+                { id: 4, sku: 'SKU-1004', name: 'Bamboo Cutting Board', category: 'Kitchen', stock: 30, cost: 25,
+                    price: 65, margin: '61.5%', status: 'In Stock' },
+                { id: 5, sku: 'SKU-1005', name: 'Ceramic Coffee Mug', category: 'Kitchen', stock: 0, cost: 12, price: 35,
+                    margin: '65.7%', status: 'Out of Stock' },
+                { id: 6, sku: 'SKU-1006', name: 'Desk Organizer', category: 'Office', stock: 55, cost: 28, price: 70,
+                    margin: '60.0%', status: 'In Stock' },
+                { id: 7, sku: 'SKU-1007', name: 'Laptop Sleeve 14"', category: 'Accessories', stock: 22, cost: 30,
+                    price: 75, margin: '60.0%', status: 'Low Stock' },
+                { id: 8, sku: 'SKU-1008', name: 'Wool Throw Blanket', category: 'Home', stock: 18, cost: 45, price: 120,
+                    margin: '62.5%', status: 'In Stock' },
+                { id: 9, sku: 'SKU-1009', name: 'Recycled Paper Notebook', category: 'Office', stock: 120, cost: 8,
+                    price: 22, margin: '63.6%', status: 'In Stock' },
+                { id: 10, sku: 'SKU-1010', name: 'Glass Storage Jars (Set of 3)', category: 'Kitchen', stock: 8, cost: 40,
+                    price: 95, margin: '57.9%', status: 'Low Stock' },
+                { id: 11, sku: 'SKU-1011', name: 'Canvas Tote Bag', category: 'Accessories', stock: 65, cost: 10,
+                    price: 28, margin: '64.3%', status: 'In Stock' },
+                { id: 12, sku: 'SKU-1012', name: 'Stainless Steel Cutlery Set', category: 'Kitchen', stock: 25, cost: 55,
+                    price: 140, margin: '60.7%', status: 'In Stock' },
+                { id: 13, sku: 'SKU-1013', name: 'Silk Scarf', category: 'Apparel', stock: 15, cost: 28, price: 80,
+                    margin: '65.0%', status: 'Low Stock' },
+                { id: 14, sku: 'SKU-1014', name: 'Enamel Serving Tray', category: 'Kitchen', stock: 20, cost: 35,
+                    price: 90, margin: '61.1%', status: 'In Stock' },
+                { id: 15, sku: 'SKU-1015', name: 'Leather Journal', category: 'Office', stock: 40, cost: 20, price: 52,
+                    margin: '61.5%', status: 'In Stock' },
+                { id: 16, sku: 'SKU-1016', name: 'Handwoven Basket', category: 'Home', stock: 10, cost: 32, price: 85,
+                    margin: '62.4%', status: 'Low Stock' },
+                { id: 17, sku: 'SKU-1017', name: 'Ceramic Vase', category: 'Home', stock: 0, cost: 38, price: 98,
+                    margin: '61.2%', status: 'Out of Stock' },
+                { id: 18, sku: 'SKU-1018', name: 'Cotton Apron', category: 'Kitchen', stock: 35, cost: 15, price: 40,
+                    margin: '62.5%', status: 'In Stock' },
+                { id: 19, sku: 'SKU-1019', name: 'Linen Table Runner', category: 'Home', stock: 14, cost: 22, price: 58,
+                    margin: '62.1%', status: 'Low Stock' },
+                { id: 20, sku: 'SKU-1020', name: 'Reusable Produce Bags', category: 'Kitchen', stock: 100, cost: 6,
+                    price: 18, margin: '66.7%', status: 'In Stock' },
+            ],
+            customers: [
+                { id: 1, name: 'Mariam Al-Farsi', phone: '+971-50-123-4567', email: 'mariam@example.com',
+                    outstanding: 4200, totalPurchases: 22000, lastPurchase: '2026-08-28', status: 'Active' },
+                { id: 2, name: 'Yusuf Rahman', phone: '+971-50-234-5678', email: 'yusuf@example.com', outstanding: 0,
+                    totalPurchases: 18500, lastPurchase: '2026-09-01', status: 'Active' },
+                { id: 3, name: 'Sara Abdullah', phone: '+971-55-345-6789', email: 'sara@example.com', outstanding: 1800,
+                    totalPurchases: 9500, lastPurchase: '2026-08-20', status: 'Active' },
+                { id: 4, name: 'Khalid Omar', phone: '+971-52-456-7890', email: 'khalid@example.com', outstanding: 0,
+                    totalPurchases: 31000, lastPurchase: '2026-08-25', status: 'Active' },
+                { id: 5, name: 'Fatima Hassan', phone: '+971-50-567-8901', email: 'fatima@example.com', outstanding: 650,
+                    totalPurchases: 7500, lastPurchase: '2026-08-15', status: 'Active' },
+                { id: 6, name: 'Omar Farouk', phone: '+971-54-678-9012', email: 'omar.f@example.com', outstanding: 0,
+                    totalPurchases: 14000, lastPurchase: '2026-08-30', status: 'Active' },
+                { id: 7, name: 'Aisha Noor', phone: '+971-56-789-0123', email: 'aisha@example.com', outstanding: 2100,
+                    totalPurchases: 16000, lastPurchase: '2026-08-18', status: 'Active' },
+                { id: 8, name: 'Hassan Ali', phone: '+971-50-890-1234', email: 'hassan@example.com', outstanding: 0,
+                    totalPurchases: 27000, lastPurchase: '2026-08-22', status: 'Active' },
+                { id: 9, name: 'Zainab Khalil', phone: '+971-55-901-2345', email: 'zainab@example.com', outstanding: 3200,
+                    totalPurchases: 12500, lastPurchase: '2026-08-10', status: 'Active' },
+                { id: 10, name: 'Ibrahim Musa', phone: '+971-52-012-3456', email: 'ibrahim@example.com', outstanding: 0,
+                    totalPurchases: 21000, lastPurchase: '2026-08-28', status: 'Active' },
+                { id: 11, name: 'Layla Haddad', phone: '+971-54-123-4567', email: 'layla@example.com', outstanding: 500,
+                    totalPurchases: 5800, lastPurchase: '2026-08-05', status: 'Active' },
+                { id: 12, name: 'Saif Al-Mansoori', phone: '+971-50-234-5678', email: 'saif@example.com', outstanding: 0,
+                    totalPurchases: 48000, lastPurchase: '2026-09-02', status: 'Active' },
+                { id: 13, name: 'Noor Karim', phone: '+971-56-345-6789', email: 'noor@example.com', outstanding: 800,
+                    totalPurchases: 6900, lastPurchase: '2026-08-12', status: 'Active' },
+                { id: 14, name: 'Rashid Ibrahim', phone: '+971-52-456-7890', email: 'rashid@example.com',
+                    outstanding: 1500, totalPurchases: 11000, lastPurchase: '2026-08-19', status: 'Active' },
+                { id: 15, name: 'Maryam Nasser', phone: '+971-50-567-8901', email: 'maryam@example.com', outstanding: 0,
+                    totalPurchases: 23500, lastPurchase: '2026-08-27', status: 'Active' },
+            ],
+            suppliers: [
+                { id: 1, name: 'Gulf Trading Co.', category: 'Home & Kitchen', totalPurchases: 85000, outstanding: 0,
+                    lastPurchase: '2026-08-25', status: 'Active' },
+                { id: 2, name: 'Desert Manufacturing', category: 'Accessories', totalPurchases: 62000, outstanding: 8500,
+                    lastPurchase: '2026-08-20', status: 'Active' },
+                { id: 3, name: 'Al-Noor Textiles', category: 'Apparel', totalPurchases: 41000, outstanding: 0,
+                    lastPurchase: '2026-08-15', status: 'Active' },
+                { id: 4, name: 'Emirates Supplies LLC', category: 'Office', totalPurchases: 28000, outstanding: 3200,
+                    lastPurchase: '2026-08-10', status: 'Active' },
+                { id: 5, name: 'Arabian Ceramics', category: 'Kitchen', totalPurchases: 53000, outstanding: 0,
+                    lastPurchase: '2026-08-28', status: 'Active' },
+                { id: 6, name: 'Oasis Home Goods', category: 'Home', totalPurchases: 37000, outstanding: 2100,
+                    lastPurchase: '2026-08-18', status: 'Active' },
+                { id: 7, name: 'Pearl Importers', category: 'Accessories', totalPurchases: 76000, outstanding: 12500,
+                    lastPurchase: '2026-08-22', status: 'Active' },
+                { id: 8, name: 'Union Distribution', category: 'Kitchen', totalPurchases: 34000, outstanding: 0,
+                    lastPurchase: '2026-08-12', status: 'Active' },
+                { id: 9, name: 'Falcon Apparel', category: 'Apparel', totalPurchases: 29000, outstanding: 450,
+                    lastPurchase: '2026-08-08', status: 'Active' },
+                { id: 10, name: 'Royal Home Textiles', category: 'Home', totalPurchases: 58000, outstanding: 0,
+                    lastPurchase: '2026-08-30', status: 'Active' },
+            ],
+            invoices: [
+                { id: 'INV-1045', customer: 'Mariam Al-Farsi', date: '2026-09-01', amount: 4200, status: 'Overdue',
+                    items: 3 },
+                { id: 'INV-1044', customer: 'Saif Al-Mansoori', date: '2026-09-02', amount: 7800, status: 'Pending',
+                    items: 5 },
+                { id: 'INV-1043', customer: 'Yusuf Rahman', date: '2026-08-30', amount: 3650, status: 'Paid', items: 2 },
+                { id: 'INV-1042', customer: 'Sara Abdullah', date: '2026-08-28', amount: 1800, status: 'Overdue',
+                    items: 1 },
+                { id: 'INV-1041', customer: 'Khalid Omar', date: '2026-08-25', amount: 9800, status: 'Paid', items: 7 },
+                { id: 'INV-1040', customer: 'Aisha Noor', date: '2026-08-22', amount: 2100, status: 'Overdue', items: 2 },
+                { id: 'INV-1039', customer: 'Omar Farouk', date: '2026-08-20', amount: 5600, status: 'Paid', items: 4 },
+                { id: 'INV-1038', customer: 'Zainab Khalil', date: '2026-08-18', amount: 3200, status: 'Overdue',
+                    items: 2 },
+                { id: 'INV-1037', customer: 'Layla Haddad', date: '2026-08-15', amount: 500, status: 'Paid', items: 1 },
+                { id: 'INV-1036', customer: 'Rashid Ibrahim', date: '2026-08-12', amount: 1500, status: 'Overdue',
+                    items: 1 },
+            ],
+            expenses: [
+                { id: 1, date: '2026-09-01', vendor: 'Landlord LLC', category: 'Rent', amount: 12000,
+                    paymentMethod: 'Bank Transfer', notes: 'Monthly rent', reviewStatus: 'No Flag Detected' },
+                { id: 2, date: '2026-08-31', vendor: 'DEWA', category: 'Utilities', amount: 850,
+                    paymentMethod: 'Bank Transfer', notes: 'Electricity & water', reviewStatus: 'No Flag Detected' },
+                { id: 3, date: '2026-08-28', vendor: 'Marketing Agency', category: 'Marketing', amount: 4500,
+                    paymentMethod: 'Credit Card', notes: 'Social media campaign', reviewStatus: 'No Flag Detected' },
+                { id: 4, date: '2026-08-27', vendor: 'Bank', category: 'Other', amount: 1200, paymentMethod: 'Auto-debit',
+                    notes: 'Interest payment', reviewStatus: 'Review Required' },
+                { id: 5, date: '2026-08-25', vendor: 'Software Co.', category: 'Software', amount: 950,
+                    paymentMethod: 'Credit Card', notes: 'Monthly SaaS subscription', reviewStatus: 'No Flag Detected' },
+                { id: 6, date: '2026-08-22', vendor: 'Transport LLC', category: 'Transportation', amount: 680,
+                    paymentMethod: 'Cash', notes: 'Delivery expenses', reviewStatus: 'No Flag Detected' },
+                { id: 7, date: '2026-08-20', vendor: 'Gulf Trading Co.', category: 'Inventory', amount: 15000,
+                    paymentMethod: 'Bank Transfer', notes: 'Stock purchase', reviewStatus: 'No Flag Detected' },
+                { id: 8, date: '2026-08-18', vendor: 'Staff Salaries', category: 'Salaries', amount: 28000,
+                    paymentMethod: 'Bank Transfer', notes: 'August payroll', reviewStatus: 'No Flag Detected' },
+                { id: 9, date: '2026-08-15', vendor: 'Legal Firm', category: 'Professional Services', amount: 3500,
+                    paymentMethod: 'Bank Transfer', notes: 'Contract review', reviewStatus: 'No Flag Detected' },
+                { id: 10, date: '2026-08-12', vendor: 'Bank', category: 'Other', amount: 420,
+                    paymentMethod: 'Auto-debit', notes: 'Interest income', reviewStatus: 'Review Required' },
+                { id: 11, date: '2026-08-10', vendor: 'Office Supplies', category: 'Other', amount: 750,
+                    paymentMethod: 'Credit Card', notes: 'Stationery', reviewStatus: 'No Flag Detected' },
+                { id: 12, date: '2026-08-08', vendor: 'Marketing Agency', category: 'Marketing', amount: 2200,
+                    paymentMethod: 'Bank Transfer', notes: 'Print advertising', reviewStatus: 'No Flag Detected' },
+                { id: 13, date: '2026-08-05', vendor: 'Landlord LLC', category: 'Rent', amount: 12000,
+                    paymentMethod: 'Bank Transfer', notes: 'Monthly rent', reviewStatus: 'No Flag Detected' },
+                { id: 14, date: '2026-08-03', vendor: 'DEWA', category: 'Utilities', amount: 920,
+                    paymentMethod: 'Bank Transfer', notes: 'Electricity & water', reviewStatus: 'No Flag Detected' },
+                { id: 15, date: '2026-08-01', vendor: 'Consulting Ltd', category: 'Professional Services', amount: 6000,
+                    paymentMethod: 'Bank Transfer', notes: 'Business consulting', reviewStatus: 'No Flag Detected' },
+            ],
+            sadaqahTransactions: [
+                { id: 1, amount: 1200, date: '2026-08-25', category: 'Food', recipient: 'Local Food Bank',
+                    paymentMethod: 'Bank Transfer', notes: 'Monthly food support' },
+                { id: 2, amount: 600, date: '2026-08-15', category: 'Education', recipient: 'Scholarship Fund',
+                    paymentMethod: 'Cash', notes: 'Student support' },
+                { id: 3, amount: 450, date: '2026-07-30', category: 'Medical Assistance', recipient: 'Hospital Charity',
+                    paymentMethod: 'Bank Transfer', notes: 'Medical aid' },
+                { id: 4, amount: 800, date: '2026-07-20', category: 'Orphans', recipient: 'Orphanage',
+                    paymentMethod: 'Bank Transfer', notes: 'Monthly support' },
+                { id: 5, amount: 300, date: '2026-07-10', category: 'General Sadaqah', recipient: 'Community Center',
+                    paymentMethod: 'Cash', notes: 'General donation' },
+            ],
+            shariahFlagged: [
+                { id: 1, transaction: 'Bank Interest Received', amount: 420, date: '2026-08-27',
+                    category: 'Interest Income', reason: 'Potential Riba-related transaction',
+                    status: 'Review Required', source: 'Bank Account' },
+                { id: 2, transaction: 'Late Payment Interest', amount: 180, date: '2026-08-20',
+                    category: 'Interest Expense', reason: 'Potential Riba-related transaction',
+                    status: 'Review Required', source: 'Credit Card' },
+                { id: 3, transaction: 'Bank Interest Received', amount: 320, date: '2026-07-27',
+                    category: 'Interest Income', reason: 'Potential Riba-related transaction',
+                    status: 'Review Required', source: 'Bank Account' },
+                { id: 4, transaction: 'Interest Payment', amount: 550, date: '2026-07-15', category: 'Interest Expense',
+                    reason: 'Potential Riba-related transaction', status: 'Review Required', source: 'Loan' },
+                { id: 5, transaction: 'Investment Income', amount: 900, date: '2026-08-01',
+                    category: 'Investment Income', reason: 'Unclear contract structure', status: 'Requires Scholar Review',
+                    source: 'Investment' },
+            ],
+            transactions: [
+                { id: 1, date: '2026-09-02', type: 'Income', category: 'Sales', amount: 7800, account: 'Cash',
+                    status: 'Completed', description: 'INV-1044 Payment' },
+                { id: 2, date: '2026-09-01', type: 'Expense', category: 'Rent', amount: 12000, account: 'Bank',
+                    status: 'Completed', description: 'Monthly rent' },
+                { id: 3, date: '2026-08-31', type: 'Expense', category: 'Utilities', amount: 850, account: 'Bank',
+                    status: 'Completed', description: 'DEWA bill' },
+                { id: 4, date: '2026-08-30', type: 'Income', category: 'Sales', amount: 3650, account: 'Bank',
+                    status: 'Completed', description: 'INV-1043 Payment' },
+                { id: 5, date: '2026-08-28', type: 'Expense', category: 'Marketing', amount: 4500, account: 'Credit Card',
+                    status: 'Completed', description: 'Campaign' },
+                { id: 6, date: '2026-08-25', type: 'Income', category: 'Sales', amount: 9800, account: 'Bank',
+                    status: 'Completed', description: 'INV-1041 Payment' },
+                { id: 7, date: '2026-08-22', type: 'Expense', category: 'Transportation', amount: 680, account: 'Cash',
+                    status: 'Completed', description: 'Delivery' },
+                { id: 8, date: '2026-08-20', type: 'Expense', category: 'Inventory', amount: 15000, account: 'Bank',
+                    status: 'Completed', description: 'Stock purchase' },
+                { id: 9, date: '2026-08-18', type: 'Expense', category: 'Salaries', amount: 28000, account: 'Bank',
+                    status: 'Completed', description: 'Payroll' },
+                { id: 10, date: '2026-08-15', type: 'Income', category: 'Sales', amount: 5600, account: 'Bank',
+                    status: 'Completed', description: 'INV-1039 Payment' },
+            ],
+            auditLogs: [
+                { id: 1, user: 'Ahmed', action: 'Created invoice', module: 'Sales', date: '2026-09-02',
+                    time: '14:32:11', change: 'Invoice #INV-1045' },
+                { id: 2, user: 'Ahmed', action: 'Edited expense', module: 'Expenses', date: '2026-09-01',
+                    time: '11:15:44', change: 'Expense #EXP-221' },
+                { id: 3, user: 'Admin', action: 'Changed Zakat methodology', module: 'Islamic Settings',
+                    date: '2026-08-30', time: '09:20:18', change: 'Methodology updated' },
+                { id: 4, user: 'Finance Manager', action: 'Approved transaction', module: 'Shariah Check',
+                    date: '2026-08-29', time: '16:45:02', change: 'Transaction review approved' },
+                { id: 5, user: 'Ahmed', action: 'Created expense', module: 'Expenses', date: '2026-08-28',
+                    time: '10:12:33', change: 'Expense #EXP-220' },
+                { id: 6, user: 'Ahmed', action: 'Added product', module: 'Inventory', date: '2026-08-27',
+                    time: '13:05:50', change: 'Product SKU-1020' },
+                { id: 7, user: 'Admin', action: 'Updated business settings', module: 'Business Settings',
+                    date: '2026-08-26', time: '15:30:21', change: 'VAT rate updated' },
+                { id: 8, user: 'Ahmed', action: 'Sent invoice', module: 'Sales', date: '2026-08-25', time: '09:48:09',
+                    change: 'Invoice #INV-1042' },
+            ],
+        };
+
+        // ================================================
+        // ZAKAT ENGINE
+        // ================================================
+        const ZakatEngine = {
+            settings: {
+                method: 'Standard Business Method',
+                madhhab: 'Hanafi',
+                nisabBasis: 'Silver',
+                nisabValue: 4080,
+                hawlStart: '2025-09-02',
+                hawlEnd: '2026-09-02',
+                liabilityTreatment: 'Deduct eligible liabilities',
+                inventoryTreatment: 'Include at cost basis',
+                receivableTreatment: 'Include current receivables',
+            },
+            calculate(data) {
+                const cash = data.cash || 82450;
+                const inventory = data.inventory || 45000;
+                const receivables = data.receivables || 34200;
+                const otherAssets = data.otherAssets || 8000;
+                const liabilities = data.liabilities || 21000;
+                const nisab = this.settings.nisabValue || 4080;
+
+                const totalAssets = cash + inventory + receivables + otherAssets;
+                const eligibleLiabilities = liabilities;
+                const zakatBase = Math.max(0, totalAssets - eligibleLiabilities);
+                const nisabMet = zakatBase >= nisab;
+                const zakatAmount = nisabMet ? zakatBase * 0.025 : 0;
+                const hawlMet = true;
+
+                return {
+                    totalAssets,
+                    eligibleLiabilities,
+                    zakatBase,
+                    nisab,
+                    nisabMet,
+                    hawlMet,
+                    zakatAmount,
+                    methodUsed: this.settings.method,
+                    madhhab: this.settings.madhhab,
+                    calculationDate: '2026-09-02',
+                    disclaimer: 'Calculation is an estimate and should be reviewed according to the selected methodology and qualified scholarly guidance.',
+                };
+            },
+            getExplanation(result) {
+                let exp = [];
+                exp.push(`Total Zakatable Assets: AED ${result.totalAssets.toFixed(2)} (Cash ${82450} + Inventory ${45000} + Receivables ${34200} + Other ${8000})`);
+                exp.push(`Eligible Liabilities: AED ${result.eligibleLiabilities.toFixed(2)}`);
+                exp.push(
+                    `Nisab Threshold: AED ${result.nisab.toFixed(2)} (${this.settings.nisabBasis} basis — ${this.settings.madhhab} methodology)`);
+                exp.push(`Zakatable Base: AED ${result.zakatBase.toFixed(2)} (Assets − Liabilities)`);
+                exp.push(
+                    `Hawl Period: ${this.settings.hawlStart} to ${this.settings.hawlEnd} (met: ${result.hawlMet ? 'Yes' : 'No'})`
+                    );
+                if (result.nisabMet) {
+                    exp.push(`Nisab Met: Yes → Zakat = Base × 2.5% = AED ${result.zakatAmount.toFixed(2)}`);
+                } else {
+                    exp.push(`Nisab Not Met → Zakat not due this period.`);
+                }
+                exp.push(`Methodology: ${result.methodUsed}`);
+                return exp;
+            },
+        };
+
+        // ================================================
+        // SHARIAH RULE ENGINE
+        // ================================================
+        const ShariahRuleEngine = {
+            rules: [
+                { id: 'R-001', category: 'Interest Income', transactionType: 'Bank Interest',
+                    condition: 'Any interest received from bank accounts', riskLevel: 'High',
+                    explanation: 'Potential Riba-related income', source: 'Shariah standard' },
+                { id: 'R-002', category: 'Interest Expense', transactionType: 'Loan Interest',
+                    condition: 'Any interest paid on loans or credit', riskLevel: 'High',
+                    explanation: 'Potential Riba-related expense', source: 'Shariah standard' },
+                { id: 'R-003', category: 'Late Payment Interest', transactionType: 'Late Fee',
+                    condition: 'Interest charged on late payments', riskLevel: 'High',
+                    explanation: 'Potential Riba-related charge', source: 'Shariah standard' },
+                { id: 'R-004', category: 'Unclear Contract', transactionType: 'Investment',
+                    condition: 'Investment with unclear structure', riskLevel: 'Medium',
+                    explanation: 'Contract structure requires review', source: 'Advisor review' },
+                { id: 'R-005', category: 'Excessive Uncertainty', transactionType: 'Derivative',
+                    condition: 'Transactions with excessive uncertainty (gharar)', riskLevel: 'Medium',
+                    explanation: 'Potential gharar concern', source: 'Shariah standard' },
+            ],
+            flagTransaction(transaction) {
+                for (const rule of this.rules) {
+                    if (transaction.category.toLowerCase().includes(rule.category.toLowerCase()) ||
+                        transaction.reason?.toLowerCase().includes('interest') ||
+                        transaction.reason?.toLowerCase().includes('riba')) {
+                        return { flagged: true, rule: rule, status: 'Review Required' };
+                    }
+                }
+                return { flagged: false, rule: null, status: 'No Flag Detected' };
+            },
+            getReviewStatus(transaction) {
+                const result = this.flagTransaction(transaction);
+                return result.status;
+            },
+        };
+
+        // ================================================
+        // UI COMPONENTS
+        // ================================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function openModal(title, bodyHTML, footerHTML = '', size = '') {
+            const container = document.getElementById('modalContainer');
+            container.innerHTML = `
+            <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+              <div class="modal ${size}">
+                <div class="modal-header">
+                  <h2>${title}</h2>
+                  <button class="modal-close" onclick="closeModal()">✕</button>
+                </div>
+                <div class="modal-body">${bodyHTML}</div>
+                ${footerHTML ? `<div class="modal-footer">${footerHTML}</div>` : ''}
+              </div>
+            </div>`;
+            AppState.currentModal = title;
+        }
+
+        function closeModal() {
+            document.getElementById('modalContainer').innerHTML = '';
+            AppState.currentModal = null;
+        }
+
+        function renderLineChart(canvasId, labels, datasets, height = 280) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = canvas.offsetWidth * dpr;
+            canvas.height = height * dpr;
+            canvas.style.height = height + 'px';
+            ctx.scale(dpr, dpr);
+            const w = canvas.offsetWidth;
+            const h = height;
+            const padding = { top: 20, right: 20, bottom: 40, left: 55 };
+            const chartW = w - padding.left - padding.right;
+            const chartH = h - padding.top - padding.bottom;
+
+            const allValues = datasets.flatMap(d => d.data);
+            const maxVal = Math.max(...allValues) * 1.15;
+            const minVal = 0;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Grid lines
+            ctx.strokeStyle = '#eeeeee';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= 4; i++) {
+                const y = padding.top + (chartH / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(w - padding.right, y);
+                ctx.stroke();
+                const val = maxVal - (maxVal / 4) * i;
+                ctx.fillStyle = '#9e9e9e';
+                ctx.font = '10px Inter, sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(Math.round(val).toLocaleString(), padding.left - 6, y + 4);
+            }
+
+            // Labels
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#757575';
+            ctx.font = '10px Inter, sans-serif';
+            const step = Math.ceil(labels.length / 6);
+            for (let i = 0; i < labels.length; i += step) {
+                const x = padding.left + (chartW / (labels.length - 1)) * i;
+                ctx.fillText(labels[i], x, h - 12);
+            }
+
+            const colors = ['#000000', '#757575', '#bdbdbd', '#424242'];
+            datasets.forEach((ds, dsIndex) => {
+                const color = colors[dsIndex % colors.length];
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                const points = ds.data.map((val, i) => {
+                    const x = padding.left + (chartW / (labels.length - 1)) * i;
+                    const y = padding.top + chartH - (val / maxVal) * chartH;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                    return { x, y };
+                });
+                ctx.stroke();
+
+                // Fill area
+                ctx.lineTo(points[points.length - 1].x, padding.top + chartH);
+                ctx.lineTo(points[0].x, padding.top + chartH);
+                ctx.closePath();
+                ctx.fillStyle = color + '08';
+                ctx.fill();
+
+                // Points
+                points.forEach(p => {
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            });
+
+            // Legend
+            let legendX = padding.left;
+            datasets.forEach((ds, i) => {
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fillRect(legendX, 6, 8, 8);
+                ctx.fillStyle = '#424242';
+                ctx.font = '10px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(ds.label, legendX + 12, 14);
+                legendX += 60 + ds.label.length * 6;
+            });
+        }
+
+        function renderBarChart(canvasId, labels, data, height = 220) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = canvas.offsetWidth * dpr;
+            canvas.height = height * dpr;
+            canvas.style.height = height + 'px';
+            ctx.scale(dpr, dpr);
+            const w = canvas.offsetWidth;
+            const h = height;
+            const padding = { top: 20, right: 20, bottom: 40, left: 55 };
+            const chartW = w - padding.left - padding.right;
+            const chartH = h - padding.top - padding.bottom;
+            const maxVal = Math.max(...data) * 1.2;
+
+            ctx.clearRect(0, 0, w, h);
+            ctx.strokeStyle = '#eeeeee';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= 4; i++) {
+                const y = padding.top + (chartH / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(w - padding.right, y);
+                ctx.stroke();
+                const val = maxVal - (maxVal / 4) * i;
+                ctx.fillStyle = '#9e9e9e';
+                ctx.font = '10px Inter, sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(Math.round(val).toLocaleString(), padding.left - 6, y + 4);
+            }
+
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#757575';
+            ctx.font = '10px Inter, sans-serif';
+            const barWidth = Math.min(40, (chartW / data.length) * 0.6);
+            const gap = (chartW / data.length) * 0.4;
+
+            data.forEach((val, i) => {
+                const x = padding.left + (chartW / data.length) * i + gap / 2;
+                const barHeight = (val / maxVal) * chartH;
+                const y = padding.top + chartH - barHeight;
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(x, y, barWidth, barHeight);
+                ctx.fillStyle = '#424242';
+                ctx.font = '10px Inter, sans-serif';
+                ctx.fillText(labels[i], x + barWidth / 2, h - 12);
+            });
+        }
+
+        // ================================================
+        // RENDER FUNCTIONS — EACH SCREEN
+        // ================================================
+        function renderSidebar() {
+            const nav = document.getElementById('sidebarNav');
+            let html = '';
+            navSections.forEach(section => {
+                html += `<div class="nav-section-label">${section.label}</div>`;
+                section.items.forEach(item => {
+                    const active = AppState.currentRoute === item.route ? 'active' : '';
+                    html += `<button class="nav-item ${active}" onclick="navigateTo('${item.route}')">${item.label}</button>`;
+                });
+            });
+            nav.innerHTML = html;
+
+            // Phone nav
+            const phoneNav = document.getElementById('phoneNav');
+            const phoneItems = [
+                { route: 'dashboard', label: 'Home' },
+                { route: 'sales', label: 'Sales' },
+                { route: 'zakat', label: 'Zakat' },
+                { route: 'expenses', label: 'Expenses' },
+                { route: 'reports', label: 'Reports' },
+                { route: 'settings', label: 'Settings' },
+            ];
+            let phoneHtml = '';
+            phoneItems.forEach(item => {
+                const active = AppState.currentRoute === item.route ? 'active' : '';
+                phoneHtml +=
+                    `<button class="phone-nav-item ${active}" onclick="navigateTo('${item.route}')">${item.label}</button>`;
+            });
+            phoneNav.innerHTML = phoneHtml;
+        }
+
+        function navigateTo(route) {
+            if (route === 'settings') route = 'businesssettings';
+            AppState.currentRoute = route;
+            renderSidebar();
+            renderPage();
+            if (window.innerWidth <= 768) toggleSidebar(false);
+        }
+
+        function toggleSidebar(force) {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (force !== undefined) {
+                AppState.sidebarOpen = force;
+            } else {
+                AppState.sidebarOpen = !AppState.sidebarOpen;
+            }
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('open', AppState.sidebarOpen);
+                backdrop.classList.toggle('active', AppState.sidebarOpen);
+            } else {
+                sidebar.classList.toggle('closed', !AppState.sidebarOpen);
+            }
+        }
+
+        function renderPage() {
+            const route = AppState.currentRoute;
+            const content = document.getElementById('contentArea');
+            const pageTitle = routes[route] || 'Dashboard';
+
+            switch (route) {
+                case 'dashboard':
+                    renderDashboard(content);
+                    break;
+                case 'sales':
+                    renderSales(content);
+                    break;
+                case 'invoices':
+                    renderInvoices(content);
+                    break;
+                case 'customers':
+                    renderCustomers(content);
+                    break;
+                case 'purchases':
+                    renderPurchases(content);
+                    break;
+                case 'suppliers':
+                    renderSuppliers(content);
+                    break;
+                case 'expenses':
+                    renderExpenses(content);
+                    break;
+                case 'inventory':
+                    renderInventory(content);
+                    break;
+                case 'products':
+                    renderProducts(content);
+                    break;
+                case 'employees':
+                    renderEmployees(content);
+                    break;
+                case 'accounts':
+                    renderAccounts(content);
+                    break;
+                case 'transactions':
+                    renderTransactions(content);
+                    break;
+                case 'cashflow':
+                    renderCashFlow(content);
+                    break;
+                case 'pl':
+                    renderPL(content);
+                    break;
+                case 'balancesheet':
+                    renderBalanceSheet(content);
+                    break;
+                case 'finreports':
+                    renderFinReports(content);
+                    break;
+                case 'zakat':
+                    renderZakat(content);
+                    break;
+                case 'sadaqah':
+                    renderSadaqah(content);
+                    break;
+                case 'shariahcheck':
+                    renderShariahCheck(content);
+                    break;
+                case 'ribaawareness':
+                    renderRibaAwareness(content);
+                    break;
+                case 'islamicfinhealth':
+                    renderIslamicFinHealth(content);
+                    break;
+                case 'reports':
+                    renderReports(content);
+                    break;
+                case 'islamicreports':
+                    renderIslamicReports(content);
+                    break;
+                case 'taxreports':
+                    renderTaxReports(content);
+                    break;
+                case 'audittrail':
+                    renderAuditTrail(content);
+                    break;
+                case 'usersroles':
+                    renderUsersRoles(content);
+                    break;
+                case 'businesssettings':
+                    renderBusinessSettings(content);
+                    break;
+                case 'islamicsettings':
+                    renderIslamicSettings(content);
+                    break;
+                case 'integrations':
+                    renderIntegrations(content);
+                    break;
+                case 'subscription':
+                    renderSubscription(content);
+                    break;
+                case 'security':
+                    renderSecurity(content);
+                    break;
+                case 'profile':
+                    renderProfile(content);
+                    break;
+                case 'blueprint':
+                    renderBlueprint(content);
+                    break;
+                case 'aiassistant':
+                    renderAIAssistant(content);
+                    break;
+                default:
+                    renderDashboard(content);
+            }
+        }
+
+        // ================================================
+        // DASHBOARD
+        // ================================================
+        function renderDashboard(container) {
+            const today = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric',
+                weekday: 'long' });
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header">
+                <div>
+                  <h1>Good morning, ${AppState.user.name}</h1>
+                  <p>${AppState.business.name} — ${today}</p>
+                </div>
+                <div class="flex gap-1">
+                  <button class="btn btn-secondary" onclick="openModal('Add Sale','<div class=form-group><label>Customer</label><select><option>Mariam Al-Farsi</option><option>Saif Al-Mansoori</option><option>Yusuf Rahman</option></select></div><div class=form-group><label>Amount</label><input type=number value=1000 /></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Sale added\')>Save Sale</button>')">+ New Sale</button>
+                  <button class="btn btn-primary" onclick="navigateTo('zakat')">Calculate Zakat</button>
+                </div>
+              </div>
+              <div class="grid grid-6 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Revenue</div><div class="kpi-value">AED 245,800</div><div class="kpi-change positive">↑ 8.2% vs last month</div></div>
+                <div class="kpi-card"><div class="kpi-label">Expenses</div><div class="kpi-value">AED 148,200</div><div class="kpi-change">↑ 3.1% vs last month</div></div>
+                <div class="kpi-card"><div class="kpi-label">Net Profit</div><div class="kpi-value">AED 97,600</div><div class="kpi-change positive">↑ 12.4% vs last month</div></div>
+                <div class="kpi-card"><div class="kpi-label">Cash</div><div class="kpi-value">AED 82,450</div><div class="kpi-change">↓ 2.3% vs last month</div></div>
+                <div class="kpi-card"><div class="kpi-label">Receivables</div><div class="kpi-value">AED 34,200</div><div class="kpi-change">↓ 5.1% vs last month</div></div>
+                <div class="kpi-card"><div class="kpi-label">Payables</div><div class="kpi-value">AED 21,700</div><div class="kpi-change">↑ 1.8% vs last month</div></div>
+              </div>
+              <div class="grid grid-2 mb-2">
+                <div class="card">
+                  <div class="card-header"><span class="card-title">Profit Overview</span><span class="text-muted text-sm">Last 8 months</span></div>
+                  <div class="chart-container"><canvas id="profitChart"></canvas></div>
+                </div>
+                <div class="card">
+                  <div class="card-header"><span class="card-title">Cash Flow</span><span class="text-muted text-sm">Money In vs Out</span></div>
+                  <div class="chart-container"><canvas id="cashFlowChart"></canvas></div>
+                </div>
+              </div>
+              <div class="grid grid-2 mb-2">
+                <div class="card">
+                  <div class="card-header"><span class="card-title">Business Health</span></div>
+                  <div class="flex gap-2" style="gap:1.5rem;align-items:center;">
+                    <div class="score-ring"><svg viewBox="0 0 100 100" width="100" height="100"><circle cx="50" cy="50" r="42" fill="none" stroke="#eee" stroke-width="8"/><circle cx="50" cy="50" r="42" fill="none" stroke="#000" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="47.5" stroke-linecap="round" transform="rotate(-90 50 50)"/></svg><span class="score-value">82</span></div>
+                    <div style="flex:1;">
+                      <div class="mb-1"><span class="text-sm font-bold">Cash Flow:</span> <span class="text-sm">Strong</span></div>
+                      <div class="mb-1"><span class="text-sm font-bold">Profitability:</span> <span class="text-sm">Healthy</span></div>
+                      <div class="mb-1"><span class="text-sm font-bold">Receivables:</span> <span class="text-sm">Moderate</span></div>
+                      <div><span class="text-sm font-bold">Debt Exposure:</span> <span class="text-sm">Low</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header"><span class="card-title">Islamic Financial Health</span><span class="badge dark">Illustrative Demo</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Zakat Status</span><span class="text-sm font-bold">Ready for Calculation</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Sadaqah</span><span class="text-sm font-bold">AED 2,450 this year</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Riba Exposure</span><span class="text-sm font-bold">Review Required</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Shariah Checks</span><span class="text-sm font-bold">94% Complete</span></div>
+                  <div class="flex-between"><span class="text-sm">Zakat Due</span><span class="text-sm font-bold">AED 8,240 (est.)</span></div>
+                  <div class="disclaimer-box">Zakat calculations are illustrative and should be reviewed according to the applicable Shariah methodology and qualified scholar guidance.</div>
+                </div>
+              </div>
+            </div>`;
+
+            setTimeout(() => {
+                renderLineChart('profitChart', ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'], [
+                    { label: 'Revenue', data: [22000, 26500, 31000, 29500, 35200, 38000, 36500, 40100] },
+                    { label: 'Expenses', data: [14500, 15500, 18000, 17000, 19500, 21000, 19800, 21800] },
+                    { label: 'Profit', data: [7500, 11000, 13000, 12500, 15700, 17000, 16700, 18300] },
+                ]);
+                renderBarChart('cashFlowChart', ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'], [21000, 24500,
+                    29000, 27500, 33000, 36000, 34000, 38000
+                ], 220);
+            }, 100);
+        }
+
+        // ================================================
+        // SALES
+        // ================================================
+        function renderSales(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Sales</h1><p>Manage sales, quotations and payments.</p></div>
+              <button class="btn btn-primary" onclick="openModal('New Sale','<div class=form-group><label>Customer</label><select><option>Mariam Al-Farsi</option><option>Saif Al-Mansoori</option><option>Yusuf Rahman</option><option>Sara Abdullah</option><option>Khalid Omar</option></select></div><div class=form-row><div class=form-group><label>Product</label><select><option>Leather Wallet</option><option>Stainless Steel Water Bottle</option><option>Organic Cotton T-Shirt</option></select></div><div class=form-group><label>Quantity</label><input type=number value=1 /></div></div><div class=form-row><div class=form-group><label>Unit Price</label><input type=number value=89 /></div><div class=form-group><label>Discount</label><input type=number value=0 /></div></div><div class=form-group><label>VAT (5%)</label><input type=number value=4.45 disabled /></div><div class=form-group><label>Total</label><input type=number value=93.45 disabled /></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Sale created successfully\')>Create Sale</button>')">+ New Sale</button></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Total Sales (This Month)</div><div class="kpi-value">AED 45,200</div><div class="kpi-change positive">↑ 6.3%</div></div>
+                <div class="kpi-card"><div class="kpi-label">Open Quotations</div><div class="kpi-value">7</div><div class="kpi-change">2 new this week</div></div>
+                <div class="kpi-card"><div class="kpi-label">Avg. Sale Value</div><div class="kpi-value">AED 2,380</div><div class="kpi-change positive">↑ 3.1%</div></div>
+              </div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">Recent Sales</span></div>
+                <div class="table-wrapper"><table><thead><tr><th>Invoice</th><th>Customer</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+                  ${DemoDB.invoices.map(inv => `<tr><td>${inv.id}</td><td>${inv.customer}</td><td>${inv.date}</td><td>${inv.items}</td><td>AED ${inv.amount.toLocaleString()}</td><td><span class="status-badge ${inv.status.toLowerCase()}">${inv.status}</span></td><td><button class="btn btn-ghost btn-sm" onclick="showToast('Viewing ${inv.id}','success')">View</button></td></tr>`).join('')}
+                </tbody></table></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // INVOICES
+        // ================================================
+        function renderInvoices(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Invoices</h1><p>Manage all customer invoices and payments.</p></div>
+              <button class="btn btn-primary" onclick="openModal('Create Invoice','<div class=form-group><label>Customer</label><select><option>Mariam Al-Farsi</option><option>Saif Al-Mansoori</option><option>Yusuf Rahman</option></select></div><div class=form-group><label>Invoice Date</label><input type=date value=2026-09-02 /></div><div class=form-group><label>Products</label><select><option>Leather Wallet (AED 89)</option><option>Ceramic Mug (AED 35)</option><option>Desk Organizer (AED 70)</option></select></div><div class=form-group><label>Quantity</label><input type=number value=1 /></div><div class=form-group><label>VAT (5%)</label><input type=number value=4.45 disabled /></div><div class=form-group><label>Total Amount</label><input type=number value=93.45 /></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Invoice created\')">Create Invoice</button>')">+ Create Invoice</button></div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">All Invoices</span></div>
+                <div class="table-wrapper"><table><thead><tr><th>Invoice</th><th>Customer</th><th>Date</th><th>Amount</th><th>VAT</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+                  ${DemoDB.invoices.map(inv => `<tr><td>${inv.id}</td><td>${inv.customer}</td><td>${inv.date}</td><td>AED ${inv.amount.toLocaleString()}</td><td>AED ${(inv.amount*0.05).toFixed(2)}</td><td><span class="status-badge ${inv.status.toLowerCase()}">${inv.status}</span></td><td><button class="btn btn-ghost btn-sm" onclick="showToast('Exporting ${inv.id}','success')">Export</button> <button class="btn btn-ghost btn-sm" onclick="showToast('Printing ${inv.id}','success')">Print</button></td></tr>`).join('')}
+                </tbody></table></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // CUSTOMERS
+        // ================================================
+        function renderCustomers(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Customers</h1><p>Manage customer accounts and relationships.</p></div>
+              <button class="btn btn-primary" onclick="openModal('Add Customer','<div class=form-group><label>Full Name</label><input type=text placeholder=Customer name /></div><div class=form-row><div class=form-group><label>Phone</label><input type=tel placeholder=+971-50-000-0000 /></div><div class=form-group><label>Email</label><input type=email placeholder=email@example.com /></div></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Customer added\')">Add Customer</button>')">+ Add Customer</button></div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Outstanding</th><th>Total Purchases</th><th>Last Purchase</th><th>Status</th></tr></thead><tbody>
+              ${DemoDB.customers.map(c => `<tr><td>${c.name}</td><td>${c.phone}</td><td>${c.email}</td><td>AED ${c.outstanding.toLocaleString()}</td><td>AED ${c.totalPurchases.toLocaleString()}</td><td>${c.lastPurchase}</td><td><span class="status-badge paid">${c.status}</span></td></tr>`).join('')}
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // PURCHASES
+        // ================================================
+        function renderPurchases(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Purchases</h1><p>Manage purchase orders and supplier transactions.</p></div>
+              <button class="btn btn-primary" onclick="showToast('New purchase form opened','success')">+ New Purchase</button></div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Order</th><th>Supplier</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody>
+              <tr><td>PO-2026-001</td><td>Gulf Trading Co.</td><td>2026-08-25</td><td>12</td><td>AED 15,000</td><td><span class="status-badge paid">Completed</span></td></tr>
+              <tr><td>PO-2026-002</td><td>Pearl Importers</td><td>2026-08-20</td><td>8</td><td>AED 22,500</td><td><span class="status-badge pending">Pending</span></td></tr>
+              <tr><td>PO-2026-003</td><td>Arabian Ceramics</td><td>2026-08-15</td><td>15</td><td>AED 9,800</td><td><span class="status-badge paid">Completed</span></td></tr>
+              <tr><td>PO-2026-004</td><td>Desert Manufacturing</td><td>2026-08-10</td><td>6</td><td>AED 8,500</td><td><span class="status-badge overdue">Overdue</span></td></tr>
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // SUPPLIERS
+        // ================================================
+        function renderSuppliers(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Suppliers</h1><p>Manage supplier accounts and information.</p></div>
+              <button class="btn btn-primary" onclick="showToast('Add supplier form opened','success')">+ Add Supplier</button></div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Supplier</th><th>Category</th><th>Total Purchases</th><th>Outstanding</th><th>Last Purchase</th><th>Status</th></tr></thead><tbody>
+              ${DemoDB.suppliers.map(s => `<tr><td>${s.name}</td><td>${s.category}</td><td>AED ${s.totalPurchases.toLocaleString()}</td><td>AED ${s.outstanding.toLocaleString()}</td><td>${s.lastPurchase}</td><td><span class="status-badge paid">${s.status}</span></td></tr>`).join('')}
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // EXPENSES
+        // ================================================
+        function renderExpenses(container) {
+            const categories = ['Rent', 'Salaries', 'Utilities', 'Marketing', 'Software', 'Transportation', 'Inventory',
+                'Professional Services', 'Other'
+            ];
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Expenses</h1><p>Track and manage all business expenses.</p></div>
+              <button class="btn btn-primary" onclick="openModal('Add Expense','<div class=form-group><label>Date</label><input type=date value=2026-09-02 /></div><div class=form-group><label>Vendor</label><input type=text placeholder=Vendor name /></div><div class=form-group><label>Category</label><select>${categories.map(c=>`<option>${c}</option>`).join('')}</select></div><div class=form-group><label>Amount (AED)</label><input type=number value=0 /></div><div class=form-group><label>Payment Method</label><select><option>Cash</option><option>Credit Card</option><option>Bank Transfer</option></select></div><div class=form-group><label>Notes</label><textarea placeholder=Optional notes></textarea></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Expense added\')">Save Expense</button>')">+ Add Expense</button></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Total Expenses (Aug)</div><div class="kpi-value">AED 148,200</div><div class="kpi-change">↑ 3.1%</div></div>
+                <div class="kpi-card"><div class="kpi-label">This Month</div><div class="kpi-value">AED 18,050</div><div class="kpi-change">3 days in</div></div>
+                <div class="kpi-card"><div class="kpi-label">Avg. Monthly</div><div class="kpi-value">AED 12,350</div><div class="kpi-change">Based on 12 months</div></div>
+              </div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Date</th><th>Vendor</th><th>Category</th><th>Amount</th><th>Payment</th><th>Islamic Review</th><th>Actions</th></tr></thead><tbody>
+              ${DemoDB.expenses.map(e => `<tr><td>${e.date}</td><td>${e.vendor}</td><td>${e.category}</td><td>AED ${e.amount.toLocaleString()}</td><td>${e.paymentMethod}</td><td><span class="status-badge ${e.reviewStatus==='Review Required'?'review':'paid'}">${e.reviewStatus}</span></td><td><button class="btn btn-ghost btn-sm" onclick="showToast('Editing expense','success')">Edit</button></td></tr>`).join('')}
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // INVENTORY
+        // ================================================
+        function renderInventory(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Inventory</h1><p>Manage stock levels and inventory valuation.</p></div>
+              <button class="btn btn-primary" onclick="openModal('Add Product','<div class=form-group><label>SKU</label><input type=text placeholder=SKU-XXXX /></div><div class=form-group><label>Product Name</label><input type=text placeholder=Product name /></div><div class=form-row><div class=form-group><label>Cost (AED)</label><input type=number value=0 /></div><div class=form-group><label>Selling Price (AED)</label><input type=number value=0 /></div></div><div class=form-group><label>Category</label><select><option>Accessories</option><option>Kitchen</option><option>Apparel</option><option>Office</option><option>Home</option></select></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Product added\')">Add Product</button>')">+ Add Product</button></div>
+              <div class="grid grid-4 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Total Products</div><div class="kpi-value">20</div><div class="kpi-change">Active SKUs</div></div>
+                <div class="kpi-card"><div class="kpi-label">Low Stock</div><div class="kpi-value">5</div><div class="kpi-change">Below minimum</div></div>
+                <div class="kpi-card"><div class="kpi-label">Inventory Value</div><div class="kpi-value">AED 45,000</div><div class="kpi-change">At cost</div></div>
+                <div class="kpi-card"><div class="kpi-label">Out of Stock</div><div class="kpi-value">2</div><div class="kpi-change">Need reorder</div></div>
+              </div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>SKU</th><th>Product</th><th>Category</th><th>Stock</th><th>Cost</th><th>Selling</th><th>Margin</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+              ${DemoDB.products.map(p => `<tr><td>${p.sku}</td><td>${p.name}</td><td>${p.category}</td><td>${p.stock}</td><td>AED ${p.cost}</td><td>AED ${p.price}</td><td>${p.margin}</td><td><span class="status-badge ${p.status==='Low Stock'?'review':p.status==='Out of Stock'?'overdue':'paid'}">${p.status}</span></td><td><button class="btn btn-ghost btn-sm" onclick="showToast('Editing ${p.name}','success')">Edit</button> <button class="btn btn-ghost btn-sm" onclick="showToast('Adjusting stock','success')">Adjust</button></td></tr>`).join('')}
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // PRODUCTS
+        // ================================================
+        function renderProducts(container) {
+            renderInventory(container);
+        }
+
+        // ================================================
+        // EMPLOYEES
+        // ================================================
+        function renderEmployees(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Employees</h1><p>Manage employee information and payroll.</p></div>
+              <button class="btn btn-primary" onclick="showToast('Add employee form opened','success')">+ Add Employee</button></div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Name</th><th>Role</th><th>Department</th><th>Monthly Salary</th><th>Joined</th><th>Status</th></tr></thead><tbody>
+              <tr><td>Ahmed Hassan</td><td>Owner</td><td>Management</td><td>AED 0</td><td>2025-01-01</td><td><span class="status-badge paid">Active</span></td></tr>
+              <tr><td>Sarah Mahmoud</td><td>Accountant</td><td>Finance</td><td>AED 8,500</td><td>2025-03-15</td><td><span class="status-badge paid">Active</span></td></tr>
+              <tr><td>Khalid Noor</td><td>Sales Manager</td><td>Sales</td><td>AED 9,200</td><td>2025-06-01</td><td><span class="status-badge paid">Active</span></td></tr>
+              <tr><td>Maryam Adel</td><td>Inventory Clerk</td><td>Operations</td><td>AED 5,800</td><td>2025-09-10</td><td><span class="status-badge paid">Active</span></td></tr>
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // ACCOUNTS
+        // ================================================
+        function renderAccounts(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Accounts</h1><p>Chart of accounts and balances.</p></div>
+              <button class="btn btn-primary" onclick="showToast('New account form opened','success')">+ New Account</button></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Cash & Bank</div><div class="kpi-value">AED 82,450</div><div class="kpi-change">3 accounts</div></div>
+                <div class="kpi-card"><div class="kpi-label">Receivables</div><div class="kpi-value">AED 34,200</div><div class="kpi-change">15 customers</div></div>
+                <div class="kpi-card"><div class="kpi-label">Payables</div><div class="kpi-value">AED 21,700</div><div class="kpi-change">10 suppliers</div></div>
+              </div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Account</th><th>Type</th><th>Balance</th><th>Category</th></tr></thead><tbody>
+              <tr><td>Cash on Hand</td><td>Asset</td><td>AED 12,450</td><td>Current Asset</td></tr>
+              <tr><td>Bank Account — Emirates NBD</td><td>Asset</td><td>AED 58,000</td><td>Current Asset</td></tr>
+              <tr><td>Bank Account — ADCB</td><td>Asset</td><td>AED 12,000</td><td>Current Asset</td></tr>
+              <tr><td>Accounts Receivable</td><td>Asset</td><td>AED 34,200</td><td>Current Asset</td></tr>
+              <tr><td>Inventory</td><td>Asset</td><td>AED 45,000</td><td>Current Asset</td></tr>
+              <tr><td>Accounts Payable</td><td>Liability</td><td>AED 21,700</td><td>Current Liability</td></tr>
+              <tr><td>Owner's Equity</td><td>Equity</td><td>AED 97,600</td><td>Equity</td></tr>
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // TRANSACTIONS
+        // ================================================
+        function renderTransactions(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Transactions</h1><p>All financial transactions across your business.</p></div>
+              <button class="btn btn-primary" onclick="showToast('New transaction form opened','success')">+ New Transaction</button></div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Date</th><th>Type</th><th>Category</th><th>Description</th><th>Amount</th><th>Account</th><th>Status</th></tr></thead><tbody>
+              ${DemoDB.transactions.map(t => `<tr><td>${t.date}</td><td>${t.type}</td><td>${t.category}</td><td>${t.description}</td><td>AED ${t.amount.toLocaleString()}</td><td>${t.account}</td><td><span class="status-badge paid">${t.status}</span></td></tr>`).join('')}
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // CASH FLOW
+        // ================================================
+        function renderCashFlow(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Cash Flow</h1><p>Monitor money in, money out, and net cash flow.</p></div></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Money In</div><div class="kpi-value">AED 245,800</div><div class="kpi-change positive">↑ 8.2%</div></div>
+                <div class="kpi-card"><div class="kpi-label">Money Out</div><div class="kpi-value">AED 163,350</div><div class="kpi-change">↑ 3.1%</div></div>
+                <div class="kpi-card"><div class="kpi-label">Net Cash Flow</div><div class="kpi-value">AED 82,450</div><div class="kpi-change positive">↑ 15.3%</div></div>
+              </div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">Cash Flow — Last 8 Months</span></div><div class="chart-container"><canvas id="cashFlowTrendChart"></canvas></div></div>
+              <div class="card"><div class="card-header"><span class="card-title">Cash Flow Breakdown</span></div>
+                <div class="grid grid-2">
+                  <div class="p-1"><h3 class="mb-1">Operating Activities</h3><p class="text-sm text-muted">Net cash from operations: AED 95,300</p></div>
+                  <div class="p-1"><h3 class="mb-1">Investing Activities</h3><p class="text-sm text-muted">Net cash from investing: AED -18,000</p></div>
+                  <div class="p-1"><h3 class="mb-1">Financing Activities</h3><p class="text-sm text-muted">Net cash from financing: AED 5,150</p></div>
+                </div>
+              </div>
+            </div>`;
+            setTimeout(() => {
+                renderLineChart('cashFlowTrendChart', ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'], [
+                    { label: 'Inflow', data: [21000, 24500, 29000, 27500, 33000, 36000, 34000, 38000] },
+                    { label: 'Outflow', data: [14000, 15200, 17800, 16500, 19000, 20500, 19200, 21000] },
+                    { label: 'Net', data: [7000, 9300, 11200, 11000, 14000, 15500, 14800, 17000] },
+                ]);
+            }, 100);
+        }
+
+        // ================================================
+        // PROFIT & LOSS
+        // ================================================
+        function renderPL(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Profit & Loss</h1><p>Income statement for your business.</p></div>
+              <button class="btn btn-secondary" onclick="showToast('Exporting P&L report','success')">Export</button></div>
+              <div class="card mb-2">
+                <div class="card-header"><span class="card-title">Profit & Loss Statement — 2026</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Revenue</span><span class="text-sm font-bold">AED 245,800</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Cost of Goods Sold</span><span class="text-sm font-bold">AED 98,300</span></div>
+                <div class="flex-between mb-1"><span class="text-sm font-bold">Gross Profit</span><span class="text-sm font-bold">AED 147,500</span></div>
+                <div class="divider"></div>
+                <div class="flex-between mb-1"><span class="text-sm">Operating Expenses</span><span class="text-sm font-bold">AED 49,900</span></div>
+                <div class="flex-between mb-1"><span class="text-sm font-bold">Net Profit</span><span class="text-sm font-bold">AED 97,600</span></div>
+                <div class="disclaimer-box">All figures are illustrative demo data for prototype demonstration purposes.</div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // BALANCE SHEET
+        // ================================================
+        function renderBalanceSheet(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Balance Sheet</h1><p>Financial position of your business.</p></div>
+              <button class="btn btn-secondary" onclick="showToast('Exporting balance sheet','success')">Export</button></div>
+              <div class="card mb-2">
+                <div class="card-header"><span class="card-title">Assets</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Cash & Bank</span><span class="text-sm">AED 82,450</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Receivables</span><span class="text-sm">AED 34,200</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Inventory</span><span class="text-sm">AED 45,000</span></div>
+                <div class="flex-between mb-1"><span class="text-sm font-bold">Total Assets</span><span class="text-sm font-bold">AED 161,650</span></div>
+              </div>
+              <div class="card mb-2">
+                <div class="card-header"><span class="card-title">Liabilities</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Accounts Payable</span><span class="text-sm">AED 21,700</span></div>
+                <div class="flex-between mb-1"><span class="text-sm font-bold">Total Liabilities</span><span class="text-sm font-bold">AED 21,700</span></div>
+              </div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">Equity</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Owner's Equity</span><span class="text-sm">AED 97,600</span></div>
+                <div class="flex-between mb-1"><span class="text-sm font-bold">Total Equity</span><span class="text-sm font-bold">AED 97,600</span></div>
+                <div class="divider"></div>
+                <div class="flex-between"><span class="text-sm font-bold">Liabilities + Equity</span><span class="text-sm font-bold">AED 119,300</span></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // FINANCIAL REPORTS
+        // ================================================
+        function renderFinReports(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Financial Reports</h1><p>Comprehensive financial analysis and reports.</p></div></div>
+              <div class="grid grid-2 mb-2">
+                <div class="card"><h3 class="mb-1">Profit & Loss</h3><p class="text-sm text-muted mb-2">Revenue, expenses and net profit.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('pl')">View Report</button></div>
+                <div class="card"><h3 class="mb-1">Balance Sheet</h3><p class="text-sm text-muted mb-2">Assets, liabilities and equity.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('balancesheet')">View Report</button></div>
+                <div class="card"><h3 class="mb-1">Cash Flow</h3><p class="text-sm text-muted mb-2">Operating, investing and financing cash flows.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('cashflow')">View Report</button></div>
+                <div class="card"><h3 class="mb-1">Expense Analysis</h3><p class="text-sm text-muted mb-2">Breakdown by category and vendor.</p><button class="btn btn-secondary btn-sm" onclick="showToast('Expense report generated','success')">View Report</button></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // ZAKAT
+        // ================================================
+        function renderZakat(container) {
+            const result = ZakatEngine.calculate({});
+            const explanation = ZakatEngine.getExplanation(result);
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Zakat</h1><p>Calculate, monitor and manage your business Zakat.</p></div>
+              <button class="btn btn-primary" onclick="openModal('Calculate Zakat','<div class=form-group><label>Calculation Date</label><input type=date value=2026-09-02 /></div><div class=form-group><label>Cash Balance</label><input type=number value=82450 id=zakatCash /></div><div class=form-group><label>Inventory Value</label><input type=number value=45000 id=zakatInventory /></div><div class=form-group><label>Receivables</label><input type=number value=34200 id=zakatReceivables /></div><div class=form-group><label>Other Zakatable Assets</label><input type=number value=8000 id=zakatOther /></div><div class=form-group><label>Eligible Liabilities</label><input type=number value=21000 id=zakatLiabilities /></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();calculateZakatFromModal()>Calculate</button>')">+ Calculate Zakat</button></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Zakatable Assets</div><div class="kpi-value">AED 169,650</div><div class="kpi-change">Cash + Inventory + Receivables + Other</div></div>
+                <div class="kpi-card"><div class="kpi-label">Eligible Liabilities</div><div class="kpi-value">AED 21,000</div><div class="kpi-change">Deductible liabilities</div></div>
+                <div class="kpi-card"><div class="kpi-label">Estimated Zakat Base</div><div class="kpi-value">AED ${result.zakatBase.toFixed(2)}</div><div class="kpi-change">Assets − Liabilities</div></div>
+              </div>
+              <div class="grid grid-2 mb-2">
+                <div class="card">
+                  <div class="card-header"><span class="card-title">Zakat Summary</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Cash</span><span class="text-sm">AED 82,450</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Inventory</span><span class="text-sm">AED 45,000</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Receivables</span><span class="text-sm">AED 34,200</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Other Zakatable Assets</span><span class="text-sm">AED 8,000</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm">Eligible Liabilities</span><span class="text-sm">AED 21,000</span></div>
+                  <div class="divider"></div>
+                  <div class="flex-between mb-1"><span class="text-sm font-bold">Estimated Zakat Base</span><span class="text-sm font-bold">AED ${result.zakatBase.toFixed(2)}</span></div>
+                  <div class="flex-between mb-1"><span class="text-sm font-bold">Nisab</span><span class="text-sm font-bold">AED ${result.nisab.toFixed(2)}</span></div>
+                  <div class="flex-between"><span class="text-sm font-bold" style="font-size:1.1rem;">Estimated Zakat</span><span class="text-sm font-bold" style="font-size:1.25rem;">AED ${result.zakatAmount.toFixed(2)}</span></div>
+                </div>
+                <div class="card">
+                  <div class="card-header"><span class="card-title">Calculation Explanation</span></div>
+                  ${explanation.map(e => `<div class="mb-1 text-sm" style="font-size:0.78rem;color:var(--text-secondary);">• ${e}</div>`).join('')}
+                  <div class="disclaimer-box">${result.disclaimer}</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">Zakat Settings</span></div>
+                <div class="grid grid-2">
+                  <div class="form-group"><label>Calculation Method</label><select><option>Standard Business Method</option><option>Cash Basis</option><option>Accrual Basis</option></select></div>
+                  <div class="form-group"><label>Madhhab / Methodology</label><select><option>Hanafi</option><option>Shafi'i</option><option>Maliki</option><option>Hanbali</option><option>Other</option></select></div>
+                  <div class="form-group"><label>Nisab Basis</label><select><option>Silver</option><option>Gold</option></select></div>
+                  <div class="form-group"><label>Hawl Start Date</label><input type="date" value="2025-09-02" /></div>
+                  <div class="form-group"><label>Hawl End Date</label><input type="date" value="2026-09-02" /></div>
+                  <div class="form-group"><label>Inventory Treatment</label><select><option>Include at cost basis</option><option>Include at market value</option><option>Exclude</option></select></div>
+                </div>
+                <div class="disclaimer-box">The system architecture supports multiple methodologies. Do NOT hard-code one Islamic ruling as universally correct.</div>
+              </div>
+            </div>`;
+        }
+
+        function calculateZakatFromModal() {
+            const cash = parseFloat(document.getElementById('zakatCash').value) || 0;
+            const inventory = parseFloat(document.getElementById('zakatInventory').value) || 0;
+            const receivables = parseFloat(document.getElementById('zakatReceivables').value) || 0;
+            const other = parseFloat(document.getElementById('zakatOther').value) || 0;
+            const liabilities = parseFloat(document.getElementById('zakatLiabilities').value) || 0;
+            const result = ZakatEngine.calculate({ cash, inventory, receivables, otherAssets: other, liabilities });
+            showToast(`Estimated Zakat: AED ${result.zakatAmount.toFixed(2)}`, 'success');
+            closeModal();
+            navigateTo('zakat');
+        }
+
+        // ================================================
+        // SADAQAH
+        // ================================================
+        function renderSadaqah(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Sadaqah</h1><p>Track and manage your charitable giving.</p></div>
+              <button class="btn btn-primary" onclick="openModal('Add Sadaqah','<div class=form-group><label>Amount (AED)</label><input type=number value=0 /></div><div class=form-group><label>Date</label><input type=date value=2026-09-02 /></div><div class=form-group><label>Category</label><select><option>General Sadaqah</option><option>Food</option><option>Education</option><option>Medical Assistance</option><option>Orphans</option><option>Community</option><option>Other</option></select></div><div class=form-group><label>Recipient/Organization</label><input type=text placeholder=Recipient name /></div><div class=form-group><label>Payment Method</label><select><option>Cash</option><option>Bank Transfer</option><option>Credit Card</option></select></div><div class=form-group><label>Notes</label><textarea placeholder=Optional notes></textarea></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Sadaqah recorded\')">Add Sadaqah</button>')">+ Add Sadaqah</button></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Total Sadaqah Given</div><div class="kpi-value">AED 12,450</div><div class="kpi-change">All time</div></div>
+                <div class="kpi-card"><div class="kpi-label">This Year</div><div class="kpi-value">AED 4,850</div><div class="kpi-change">2026</div></div>
+                <div class="kpi-card"><div class="kpi-label">Monthly Average</div><div class="kpi-value">AED 404</div><div class="kpi-change">Based on 12 months</div></div>
+              </div>
+              <div class="card"><div class="card-header"><span class="card-title">Sadaqah Transaction History</span></div>
+                <div class="table-wrapper"><table><thead><tr><th>Date</th><th>Amount</th><th>Category</th><th>Recipient</th><th>Payment</th><th>Notes</th></tr></thead><tbody>
+                ${DemoDB.sadaqahTransactions.map(s => `<tr><td>${s.date}</td><td>AED ${s.amount.toLocaleString()}</td><td>${s.category}</td><td>${s.recipient}</td><td>${s.paymentMethod}</td><td>${s.notes}</td></tr>`).join('')}
+                </tbody></table></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // SHARIAH CHECK
+        // ================================================
+        function renderShariahCheck(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Shariah Check</h1><p>Review business transactions for potential Shariah concerns.</p></div></div>
+              <div class="disclaimer-box mb-2">The system flags transactions that may require review. It never automatically declares a transaction "Halal" or "Haram" unless based on a defined authoritative rule. Statuses used: No Flag Detected, Review Recommended, Potential Shariah Concern, Requires Scholar Review.</div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Transaction</th><th>Amount</th><th>Date</th><th>Category</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+              ${DemoDB.shariahFlagged.map(s => `<tr><td>${s.transaction}</td><td>AED ${s.amount.toLocaleString()}</td><td>${s.date}</td><td>${s.category}</td><td>${s.reason}</td><td><span class="status-badge review">${s.status}</span></td><td><button class="btn btn-ghost btn-sm" onclick="showToast('Reviewing transaction','success')">Review</button> <button class="btn btn-ghost btn-sm" onclick="showToast('Sent for scholar review','success')">Send to Scholar</button></td></tr>`).join('')}
+              </tbody></table></div></div>
+              <div class="card mt-2"><div class="card-header"><span class="card-title">Shariah Rule Engine — Architecture Preview</span></div>
+                <div class="text-sm text-muted" style="font-size:0.78rem;">Future production rules include: Interest Income, Interest Expense, Late Payment Interest, Gambling-related, Alcohol-related, Unclear Contract, Excessive Uncertainty, Potentially Problematic Financing. Each rule will have Rule ID, Category, Transaction Type, Condition, Risk Level, Explanation, Scholar Source, Review Status.</div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // RIBA AWARENESS
+        // ================================================
+        function renderRibaAwareness(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Riba Awareness</h1><p>Identify and review potential interest-related transactions.</p></div>
+              <button class="btn btn-primary" onclick="showToast('Bulk review sent','success')">Send for Scholar Review</button></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">Potential Interest Income</div><div class="kpi-value">AED 420</div><div class="kpi-change">3 transactions</div></div>
+                <div class="kpi-card"><div class="kpi-label">Potential Interest Expense</div><div class="kpi-value">AED 1,200</div><div class="kpi-change">2 transactions</div></div>
+                <div class="kpi-card"><div class="kpi-label">Transactions Requiring Review</div><div class="kpi-value">4</div><div class="kpi-change">2 new this month</div></div>
+              </div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Transaction</th><th>Amount</th><th>Date</th><th>Category</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+              ${DemoDB.shariahFlagged.filter(s => s.reason.includes('Riba') || s.category.includes('Interest')).map(s => `<tr><td>${s.transaction}</td><td>AED ${s.amount.toLocaleString()}</td><td>${s.date}</td><td>${s.category}</td><td>${s.reason}</td><td><span class="status-badge review">${s.status}</span></td><td><button class="btn btn-ghost btn-sm" onclick="showToast('Reviewing','success')">Review</button> <button class="btn btn-ghost btn-sm" onclick="showToast('Sent to scholar','success')">Send to Scholar</button></td></tr>`).join('')}
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // ISLAMIC FINANCIAL HEALTH
+        // ================================================
+        function renderIslamicFinHealth(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Islamic Financial Health</h1><p>Comprehensive assessment of your business's Islamic financial practices.</p></div></div>
+              <div class="grid grid-2 mb-2">
+                <div class="card flex-center" style="flex-direction:column;gap:0.75rem;padding:2rem;">
+                  <div class="score-ring" style="width:130px;height:130px;"><svg viewBox="0 0 100 100" width="130" height="130"><circle cx="50" cy="50" r="42" fill="none" stroke="#eee" stroke-width="8"/><circle cx="50" cy="50" r="42" fill="none" stroke="#000" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="23.8" stroke-linecap="round" transform="rotate(-90 50 50)"/></svg><span class="score-value" style="font-size:2rem;">91</span></div>
+                  <span class="text-sm text-muted">Islamic Financial Health Score</span>
+                </div>
+                <div class="card">
+                  <div class="card-header"><span class="card-title">Score Breakdown</span></div>
+                  <div class="mb-1"><div class="flex-between mb-1"><span class="text-sm">Zakat Readiness</span><span class="text-sm font-bold">95%</span></div><div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div></div>
+                  <div class="mb-1"><div class="flex-between mb-1"><span class="text-sm">Charity Tracking</span><span class="text-sm font-bold">88%</span></div><div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div></div>
+                  <div class="mb-1"><div class="flex-between mb-1"><span class="text-sm">Riba Awareness</span><span class="text-sm font-bold">82%</span></div><div class="progress-bar"><div class="progress-fill" style="width:82%"></div></div></div>
+                  <div class="mb-1"><div class="flex-between mb-1"><span class="text-sm">Transaction Transparency</span><span class="text-sm font-bold">96%</span></div><div class="progress-bar"><div class="progress-fill" style="width:96%"></div></div></div>
+                  <div class="mb-1"><div class="flex-between mb-1"><span class="text-sm">Financial Records</span><span class="text-sm font-bold">94%</span></div><div class="progress-bar"><div class="progress-fill" style="width:94%"></div></div></div>
+                  <div><div class="flex-between mb-1"><span class="text-sm">Shariah Review Coverage</span><span class="text-sm font-bold">90%</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div></div>
+                </div>
+              </div>
+              <div class="disclaimer-box">This score is illustrative for demonstration purposes only. It does not constitute a religious ruling or certification.</div>
+            </div>`;
+        }
+
+        // ================================================
+        // REPORTS (Business)
+        // ================================================
+        function renderReports(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Reports</h1><p>Generate and export business reports.</p></div></div>
+              <div class="grid grid-3 mb-2">
+                <div class="card"><h3 class="mb-1">Profit & Loss</h3><p class="text-sm text-muted mb-2">Revenue, COGS, gross profit, net profit.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('pl')">View</button></div>
+                <div class="card"><h3 class="mb-1">Balance Sheet</h3><p class="text-sm text-muted mb-2">Assets, liabilities, equity.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('balancesheet')">View</button></div>
+                <div class="card"><h3 class="mb-1">Cash Flow</h3><p class="text-sm text-muted mb-2">Operating, investing, financing.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('cashflow')">View</button></div>
+                <div class="card"><h3 class="mb-1">Sales Report</h3><p class="text-sm text-muted mb-2">Sales by period, customer, product.</p><button class="btn btn-secondary btn-sm" onclick="showToast('Sales report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Expense Report</h3><p class="text-sm text-muted mb-2">Expenses by category, vendor.</p><button class="btn btn-secondary btn-sm" onclick="showToast('Expense report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Inventory Report</h3><p class="text-sm text-muted mb-2">Stock levels, valuation, movements.</p><button class="btn btn-secondary btn-sm" onclick="showToast('Inventory report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Customer Report</h3><p class="text-sm text-muted mb-2">Customer activity and balances.</p><button class="btn btn-secondary btn-sm" onclick="showToast('Customer report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Supplier Report</h3><p class="text-sm text-muted mb-2">Supplier activity and payables.</p><button class="btn btn-secondary btn-sm" onclick="showToast('Supplier report exported','success')">Export</button></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // ISLAMIC REPORTS
+        // ================================================
+        function renderIslamicReports(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Islamic Finance Reports</h1><p>Zakat, Sadaqah, Shariah review and Riba reports.</p></div></div>
+              <div class="grid grid-2 mb-2">
+                <div class="card"><h3 class="mb-1">Zakat Report</h3><p class="text-sm text-muted mb-2">Detailed Zakat calculation and assessment.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('zakat')">View</button> <button class="btn btn-secondary btn-sm" onclick="showToast('Zakat report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Sadaqah Report</h3><p class="text-sm text-muted mb-2">Charitable giving summary and history.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('sadaqah')">View</button> <button class="btn btn-secondary btn-sm" onclick="showToast('Sadaqah report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Shariah Review Report</h3><p class="text-sm text-muted mb-2">Transactions flagged for review.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('shariahcheck')">View</button> <button class="btn btn-secondary btn-sm" onclick="showToast('Shariah report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Riba Review Report</h3><p class="text-sm text-muted mb-2">Potential interest-related transactions.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('ribaawareness')">View</button> <button class="btn btn-secondary btn-sm" onclick="showToast('Riba report exported','success')">Export</button></div>
+                <div class="card"><h3 class="mb-1">Islamic Financial Health Report</h3><p class="text-sm text-muted mb-2">Comprehensive Islamic finance assessment.</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('islamicfinhealth')">View</button> <button class="btn btn-secondary btn-sm" onclick="showToast('Health report exported','success')">Export</button></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // TAX/VAT REPORTS
+        // ================================================
+        function renderTaxReports(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Tax/VAT Reports</h1><p>VAT compliance and reporting.</p></div></div>
+              <div class="grid grid-3 mb-2">
+                <div class="kpi-card"><div class="kpi-label">VAT Collected</div><div class="kpi-value">AED 12,290</div><div class="kpi-change">This year</div></div>
+                <div class="kpi-card"><div class="kpi-label">VAT Paid</div><div class="kpi-value">AED 7,410</div><div class="kpi-change">Input VAT</div></div>
+                <div class="kpi-card"><div class="kpi-label">Net VAT Payable</div><div class="kpi-value">AED 4,880</div><div class="kpi-change">Q3 2026</div></div>
+              </div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">VAT Summary</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Taxable Sales</span><span class="text-sm">AED 245,800</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">VAT Rate</span><span class="text-sm">5%</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Output VAT</span><span class="text-sm">AED 12,290</span></div>
+                <div class="flex-between mb-1"><span class="text-sm">Input VAT</span><span class="text-sm">AED 7,410</span></div>
+                <div class="divider"></div>
+                <div class="flex-between"><span class="text-sm font-bold">Net VAT Payable</span><span class="text-sm font-bold">AED 4,880</span></div>
+              </div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>Transaction</th><th>Date</th><th>Type</th><th>Taxable Amount</th><th>VAT</th></tr></thead><tbody>
+              <tr><td>INV-1045</td><td>2026-09-01</td><td>Sale</td><td>AED 4,200</td><td>AED 210</td></tr>
+              <tr><td>INV-1044</td><td>2026-09-02</td><td>Sale</td><td>AED 7,800</td><td>AED 390</td></tr>
+              <tr><td>PO-2026-001</td><td>2026-08-25</td><td>Purchase</td><td>AED 15,000</td><td>AED 750</td></tr>
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // AUDIT TRAIL
+        // ================================================
+        function renderAuditTrail(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Audit Trail</h1><p>Complete history of user actions and system changes.</p></div>
+              <button class="btn btn-secondary" onclick="showToast('Audit log exported','success')">Export Log</button></div>
+              <div class="card"><div class="table-wrapper"><table><thead><tr><th>User</th><th>Action</th><th>Module</th><th>Date</th><th>Time</th><th>Change</th></tr></thead><tbody>
+              ${DemoDB.auditLogs.map(a => `<tr><td>${a.user}</td><td>${a.action}</td><td>${a.module}</td><td>${a.date}</td><td>${a.time}</td><td>${a.change}</td></tr>`).join('')}
+              </tbody></table></div></div>
+            </div>`;
+        }
+
+        // ================================================
+        // USERS & ROLES
+        // ================================================
+        function renderUsersRoles(container) {
+            const roles = ['Owner', 'Admin', 'Accountant', 'Finance Manager', 'Sales Manager', 'Employee', 'Auditor',
+                'Shariah Reviewer'
+            ];
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Users & Roles</h1><p>Manage access, roles and permissions.</p></div>
+              <button class="btn btn-primary" onclick="openModal('Add User','<div class=form-group><label>Full Name</label><input type=text placeholder=User name /></div><div class=form-group><label>Email</label><input type=email placeholder=email@example.com /></div><div class=form-group><label>Role</label><select>${roles.map(r=>`<option>${r}</option>`).join('')}</select></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'User added\')">Add User</button>')">+ Add User</button></div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">Roles</span></div>
+                <div class="grid grid-4">
+                  ${roles.map(r => `<div class="p-1 text-sm" style="padding:0.5rem;border:1px solid var(--border-light);border-radius:var(--radius-sm);">${r}</div>`).join('')}
+                </div>
+              </div>
+              <div class="card"><div class="card-header"><span class="card-title">Permissions Matrix</span></div>
+                <div class="table-wrapper"><table><thead><tr><th>Permission</th>${roles.map(r=>`<th>${r}</th>`).join('')}</tr></thead><tbody>
+                <tr><td>View Financial Data</td>${roles.map(()=>'<td>✓</td>').join('')}</tr>
+                <tr><td>Create Transactions</td>${roles.map((r,i)=>`<td>${i<3?'✓':'—'}</td>`).join('')}</tr>
+                <tr><td>Approve Transactions</td>${roles.map((r,i)=>`<td>${i===0||i===3?'✓':'—'}</td>`).join('')}</tr>
+                <tr><td>Islamic Finance Views</td>${roles.map((r,i)=>`<td>${i===0||i===1||i===3||i===7?'✓':'—'}</td>`).join('')}</tr>
+                <tr><td>Export Reports</td>${roles.map((r,i)=>`<td>${i<5?'✓':'—'}</td>`).join('')}</tr>
+                </tbody></table></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // BUSINESS SETTINGS
+        // ================================================
+        function renderBusinessSettings(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Business Settings</h1><p>Configure your business profile and preferences.</p></div></div>
+              <div class="card mb-2">
+                <div class="card-header"><span class="card-title">Business Information</span></div>
+                <div class="grid grid-2">
+                  <div class="form-group"><label>Business Name</label><input type="text" value="${AppState.business.name}" /></div>
+                  <div class="form-group"><label>Country</label><input type="text" value="${AppState.business.country}" /></div>
+                  <div class="form-group"><label>Currency</label><select><option>AED</option><option>USD</option><option>EUR</option><option>GBP</option><option>SAR</option></select></div>
+                  <div class="form-group"><label>Financial Year</label><select><option>2026</option><option>2025</option></select></div>
+                  <div class="form-group"><label>VAT / Tax Rate (%)</label><input type="number" value="${AppState.business.vatRate}" /></div>
+                  <div class="form-group"><label>Invoice Prefix</label><input type="text" value="INV-" /></div>
+                </div>
+              </div>
+              <div class="card"><div class="card-header"><span class="card-title">Bank Accounts & Branches</span></div>
+                <div class="grid grid-2">
+                  <div class="form-group"><label>Primary Bank Account</label><input type="text" value="Emirates NBD — 1234567890" /></div>
+                  <div class="form-group"><label>Branch Name</label><input type="text" value="Main Branch" /></div>
+                </div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // ISLAMIC SETTINGS
+        // ================================================
+        function renderIslamicSettings(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Islamic Settings</h1><p>Configure your Islamic finance preferences.</p></div></div>
+              <div class="card mb-2">
+                <div class="card-header"><span class="card-title">Zakat Configuration</span></div>
+                <div class="grid grid-2">
+                  <div class="form-group"><label>Madhhab / Methodology</label><select><option>Hanafi</option><option>Shafi'i</option><option>Maliki</option><option>Hanbali</option><option>Other</option></select></div>
+                  <div class="form-group"><label>Zakat Method</label><select><option>Standard Business Method</option><option>Cash Basis</option><option>Accrual Basis</option></select></div>
+                  <div class="form-group"><label>Nisab Basis</label><select><option>Silver</option><option>Gold</option></select></div>
+                  <div class="form-group"><label>Nisab Value</label><input type="number" value="4080" /></div>
+                  <div class="form-group"><label>Hawl Start</label><input type="date" value="2025-09-02" /></div>
+                  <div class="form-group"><label>Hawl End</label><input type="date" value="2026-09-02" /></div>
+                  <div class="form-group"><label>Liability Treatment</label><select><option>Deduct eligible liabilities</option><option>Do not deduct</option></select></div>
+                  <div class="form-group"><label>Inventory Treatment</label><select><option>Include at cost basis</option><option>Include at market value</option><option>Exclude</option></select></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">Shariah Governance</span></div>
+                <div class="grid grid-2">
+                  <div class="form-group"><label>Scholar Name</label><input type="text" placeholder="Scholar name" /></div>
+                  <div class="form-group"><label>Institution</label><input type="text" placeholder="Institution name" /></div>
+                  <div class="form-group"><label>Review Date</label><input type="date" /></div>
+                  <div class="form-group"><label>Notes</label><input type="text" placeholder="Methodology notes" /></div>
+                </div>
+                <div class="disclaimer-box">The software provides calculations/workflows and does not replace qualified Islamic scholarly advice. Always consult with qualified scholars for religious rulings.</div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // INTEGRATIONS
+        // ================================================
+        function renderIntegrations(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Integrations</h1><p>Connect your business tools and services.</p></div></div>
+              <div class="grid grid-3">
+                <div class="card"><h3 class="mb-1">Payment Gateways</h3><p class="text-sm text-muted mb-2">Stripe, PayPal, Checkout.com</p><button class="btn btn-secondary btn-sm" onclick="showToast('Integration connected','success')">Connect</button></div>
+                <div class="card"><h3 class="mb-1">Bank Integrations</h3><p class="text-sm text-muted mb-2">Emirates NBD, ADCB, Mashreq</p><button class="btn btn-secondary btn-sm" onclick="showToast('Bank connected','success')">Connect</button></div>
+                <div class="card"><h3 class="mb-1">E-commerce</h3><p class="text-sm text-muted mb-2">Shopify, WooCommerce</p><button class="btn btn-secondary btn-sm" onclick="showToast('Store connected','success')">Connect</button></div>
+                <div class="card"><h3 class="mb-1">Accounting</h3><p class="text-sm text-muted mb-2">QuickBooks, Xero</p><button class="btn btn-secondary btn-sm" onclick="showToast('Accounting connected','success')">Connect</button></div>
+                <div class="card"><h3 class="mb-1">API Access</h3><p class="text-sm text-muted mb-2">REST API, Webhooks</p><button class="btn btn-secondary btn-sm" onclick="navigateTo('blueprint')">View Docs</button></div>
+                <div class="card"><h3 class="mb-1">Scholar Portal</h3><p class="text-sm text-muted mb-2">Connect a Shariah review portal</p><button class="btn btn-secondary btn-sm" onclick="showToast('Scholar portal linked','success')">Connect</button></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // SUBSCRIPTION
+        // ================================================
+        function renderSubscription(container) {
+            const plans = [
+                { name: 'Free', monthly: 0, annual: 0, features: ['1 User', '50 Invoices', 'Basic Reports'] },
+                { name: 'Starter', monthly: 49, annual: 39, features: ['2 Users', '500 Invoices', 'All Reports', 'Zakat',
+                        'Sadaqah'
+                    ] },
+                { name: 'Growth', monthly: 129, annual: 99, features: ['5 Users', 'Unlimited Invoices', 'Shariah Tools',
+                        'API Access', 'Audit Trail'
+                    ] },
+                { name: 'Business', monthly: 299, annual: 239, features: ['10 Users', 'Multi-Branch', 'Advanced Reports',
+                        'Priority Support'
+                    ] },
+                { name: 'Enterprise', monthly: 799, annual: 639, features: ['Unlimited Users', 'Custom API',
+                        'Scholar Portal', 'SLA', 'Dedicated Support'
+                    ] },
+            ];
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Subscription</h1><p>Manage your plan and billing.</p></div></div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">Current Plan</span></div>
+                <div class="flex-between"><span class="text-sm font-bold">BUSINESS PLAN</span><span class="badge dark">Active</span></div>
+                <p class="text-sm text-muted mt-1">Next billing: September 30, 2026 — AED 299/month</p>
+              </div>
+              <div class="grid grid-5 mb-2" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+                ${plans.map(p => `<div class="card" style="text-align:center;">
+                  <h3 class="mb-1">${p.name}</h3>
+                  <div class="kpi-value" style="font-size:1.5rem;margin-bottom:0.5rem;">AED ${p.monthly}/mo</div>
+                  <div class="text-sm text-muted mb-1">AED ${p.annual}/mo annually</div>
+                  ${p.features.map(f=>`<div class="text-sm" style="font-size:0.72rem;padding:0.2rem 0;">${f}</div>`).join('')}
+                  <button class="btn btn-primary btn-sm w-full mt-2" onclick="openModal('Checkout','<div class=form-group><label>Card Number</label><input type=text value=4242 4242 4242 4242 /></div><div class=form-row><div class=form-group><label>Expiry</label><input type=text value=12/28 /></div><div class=form-group><label>CVC</label><input type=text value=123 /></div></div><div class=form-group><label>Name on Card</label><input type=text value=Ahmed Hassan /></div>','<button class=btn btn-secondary onclick=closeModal()>Cancel</button><button class=btn btn-primary onclick=closeModal();showToast(\'Subscription updated (demo)\')">Confirm</button>')">Select</button>
+                </div>`).join('')}
+              </div>
+              <div class="disclaimer-box">This is a demo checkout. No actual payment processing is implemented in this prototype.</div>
+            </div>`;
+        }
+
+        // ================================================
+        // SECURITY
+        // ================================================
+        function renderSecurity(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Security Center</h1><p>Manage security settings and monitor access.</p></div></div>
+              <div class="grid grid-2 mb-2">
+                <div class="card"><h3 class="mb-1">Account Security</h3><div class="flex-between mb-1"><span class="text-sm">MFA</span><span class="badge dark">Enabled</span></div><div class="flex-between mb-1"><span class="text-sm">Password</span><span class="text-sm">Last changed 30 days ago</span></div><div class="flex-between"><span class="text-sm">Active Sessions</span><span class="text-sm">3 devices</span></div></div>
+                <div class="card"><h3 class="mb-1">API Keys</h3><div class="flex-between mb-1"><span class="text-sm">Production Key</span><span class="badge">•••••••</span></div><div class="flex-between"><span class="text-sm">Test Key</span><span class="badge">•••••••</span></div></div>
+              </div>
+              <div class="grid grid-2 mb-2">
+                <div class="card"><h3 class="mb-1">Data Privacy</h3><p class="text-sm text-muted mb-2">Your financial data is encrypted at rest and in transit. Role-based access control is enforced.</p><div class="flex gap-1"><button class="btn btn-secondary btn-sm" onclick="showToast('Data export requested','success')">Export Data</button><button class="btn btn-danger btn-sm" onclick="showToast('Deletion requested','error')">Delete Data</button></div></div>
+                <div class="card"><h3 class="mb-1">Login History</h3><div class="text-sm text-muted">Last 5 logins:</div><div class="text-sm" style="font-size:0.72rem;">• 2026-09-02 08:15 (Dubai, UAE)</div><div class="text-sm" style="font-size:0.72rem;">• 2026-09-01 14:30 (Dubai, UAE)</div><div class="text-sm" style="font-size:0.72rem;">• 2026-08-30 09:00 (Dubai, UAE)</div></div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // USER PROFILE
+        // ================================================
+        function renderProfile(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>User Profile</h1><p>Your account information and preferences.</p></div></div>
+              <div class="card">
+                <div class="flex gap-2 mb-2" style="align-items:center;">
+                  <div class="user-avatar" style="width:56px;height:56px;font-size:1.5rem;">A</div>
+                  <div><h3>Ahmed Hassan</h3><p class="text-sm text-muted">Owner — ${AppState.business.name}</p></div>
+                </div>
+                <div class="grid grid-2">
+                  <div class="form-group"><label>Full Name</label><input type="text" value="Ahmed Hassan" /></div>
+                  <div class="form-group"><label>Email</label><input type="email" value="${AppState.user.email}" /></div>
+                  <div class="form-group"><label>Phone</label><input type="tel" value="+971-50-000-0000" /></div>
+                  <div class="form-group"><label>Role</label><input type="text" value="Owner" disabled /></div>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('Profile updated','success')">Save Changes</button>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // PRODUCT BLUEPRINT
+        // ================================================
+        function renderBlueprint(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Product Blueprint</h1><p>Complete software architecture specification for development.</p></div></div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">Software Architecture</span></div>
+                <div class="grid grid-2">
+                  <div><h3 class="mb-1">Frontend</h3><p class="text-sm text-muted">React / Next.js — Server-side rendering, component-based architecture.</p></div>
+                  <div><h3 class="mb-1">Backend</h3><p class="text-sm text-muted">Node.js / NestJS — Modular, scalable API.</p></div>
+                  <div><h3 class="mb-1">Database</h3><p class="text-sm text-muted">PostgreSQL — Relational, ACID compliant.</p></div>
+                  <div><h3 class="mb-1">Authentication</h3><p class="text-sm text-muted">OAuth 2.0 / JWT / Passkeys</p></div>
+                  <div><h3 class="mb-1">Payments</h3><p class="text-sm text-muted">Stripe — Subscription and billing.</p></div>
+                  <div><h3 class="mb-1">Storage</h3><p class="text-sm text-muted">S3-compatible object storage</p></div>
+                  <div><h3 class="mb-1">Cache</h3><p class="text-sm text-muted">Redis — Session and query cache.</p></div>
+                  <div><h3 class="mb-1">Search</h3><p class="text-sm text-muted">OpenSearch / Elasticsearch</p></div>
+                  <div><h3 class="mb-1">API</h3><p class="text-sm text-muted">REST + optional GraphQL</p></div>
+                  <div><h3 class="mb-1">Infrastructure</h3><p class="text-sm text-muted">AWS / Azure / Google Cloud</p></div>
+                </div>
+              </div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">Database Schema — Core Tables</span></div>
+                <div class="text-sm" style="font-size:0.72rem;color:var(--text-secondary);">
+                  Users, Organizations, Roles, Permissions, Branches, Products, Categories, Customers, Suppliers, Invoices, InvoiceItems, Payments, Purchases, PurchaseItems, Expenses, ExpenseCategories, Inventory, InventoryTransactions, Accounts, Transactions, JournalEntries, TaxRecords, ZakatAssessments, ZakatTransactions, SadaqahTransactions, ShariahReviews, ShariahRules, RibaFlags, Reports, AuditLogs, Subscriptions, Notifications, ScholarReviews.
+                </div>
+              </div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">API Architecture</span></div>
+                <div class="text-sm" style="font-size:0.72rem;color:var(--text-secondary);">
+                  /api/auth, /api/business, /api/users, /api/products, /api/inventory, /api/customers, /api/suppliers, /api/sales, /api/invoices, /api/purchases, /api/expenses, /api/accounting, /api/reports, /api/zakat, /api/sadaqah, /api/shariah, /api/riba, /api/audit, /api/subscription.
+                </div>
+              </div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">Multi-Tenant Architecture</span></div>
+                <div class="text-sm text-muted">Organization → Branches → Users → Roles → Financial Data → Islamic Finance Data. Every organization's data is fully isolated.</div>
+              </div>
+              <div class="card mb-2"><div class="card-header"><span class="card-title">Development Phases</span></div>
+                <div class="grid grid-2">
+                  <div><h3 class="mb-1">Phase 1 — MVP</h3><div class="text-sm text-muted" style="font-size:0.72rem;">Authentication, Business Setup, Dashboard, Sales, Invoices, Expenses, Customers, Products, Inventory, Basic Accounting, Zakat, Sadaqah, Reports.</div></div>
+                  <div><h3 class="mb-1">Phase 2</h3><div class="text-sm text-muted" style="font-size:0.72rem;">Advanced Accounting, Multi-user, Multi-branch, Shariah Rule Engine, Riba Detection, Advanced Reports, Subscriptions.</div></div>
+                  <div><h3 class="mb-1">Phase 3</h3><div class="text-sm text-muted" style="font-size:0.72rem;">AI Business Assistant, AI Financial Analysis, AI Zakat Assistant, AI Transaction Review, Predictive Cash Flow.</div></div>
+                  <div><h3 class="mb-1">Phase 4</h3><div class="text-sm text-muted" style="font-size:0.72rem;">Enterprise, API, Integrations, Accountant Portal, Scholar Review Portal, Bank Integrations, Payment Integrations, Global Expansion.</div></div>
+                </div>
+              </div>
+              <div class="card"><div class="card-header"><span class="card-title">Security & Compliance</span></div>
+                <div class="text-sm text-muted">Encryption at rest, Encryption in transit, Role-based access control, MFA, Audit logging, Session management, Rate limiting, Backups, Disaster recovery.</div>
+              </div>
+            </div>`;
+        }
+
+        // ================================================
+        // AI ASSISTANT
+        // ================================================
+        function renderAIAssistant(container) {
+            container.innerHTML = `
+            <div class="page">
+              <div class="page-header"><div><h1>Islamic Business AI</h1><p>Intelligent assistant for business and Islamic finance insights.</p></div></div>
+              <div class="card mb-2">
+                <div class="card-header"><span class="card-title">Ask a question</span></div>
+                <div class="flex gap-1 mb-2">
+                  <input type="text" id="aiInput" placeholder='Try: "Why did my profit decrease this month?" or "How much Zakat may I owe?"' />
+                  <button class="btn btn-primary" onclick="handleAIQuestion()">Ask</button>
+                </div>
+                <div id="aiResponse" class="text-sm" style="font-size:0.82rem;color:var(--text-secondary);"></div>
+              </div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">Example Queries</span></div>
+                <button class="btn btn-ghost btn-sm mb-1" onclick="document.getElementById('aiInput').value='Why did my profit decrease this month?';handleAIQuestion()">Why did my profit decrease this month?</button>
+                <button class="btn btn-ghost btn-sm mb-1" onclick="document.getElementById('aiInput').value='How much Zakat may I owe?';handleAIQuestion()">How much Zakat may I owe?</button>
+                <button class="btn btn-ghost btn-sm" onclick="document.getElementById('aiInput').value='Which expenses have increased the most?';handleAIQuestion()">Which expenses have increased the most?</button>
+              </div>
+            </div>`;
+        }
+
+        function handleAIQuestion() {
+            const q = (document.getElementById('aiInput')?.value || '').toLowerCase();
+            const responseDiv = document.getElementById('aiResponse');
+            let response = '';
+
+            if (q.includes('profit') && q.includes('decreas')) {
+                response =
+                    'Revenue increased 8%. Operating expenses increased 17%. Marketing expenses increased 24%. Inventory costs increased 11%. Primary profit pressure: Operating expenses. Would you like me to analyze your expenses?';
+            } else if (q.includes('zakat') || q.includes('owe')) {
+                response =
+                    'I can prepare an estimated calculation based on your selected methodology. This is not a religious ruling and should be reviewed according to your chosen Shariah methodology. Estimated Zakat: AED 3,716.25 (based on Hanafi, Silver Nisab).';
+            } else if (q.includes('expense') && q.includes('increas')) {
+                response =
+                    'Expense analysis: Marketing increased 24% (AED 2,200 more), Software increased 8%, Transportation increased 5%. Marketing is your largest expense growth area.';
+            } else {
+                response =
+                    'I can help with business financial analysis, Zakat estimation, expense insights, cash flow forecasting, and Shariah review assistance. Please ask a question about your business finances.';
+            }
+
+            responseDiv.innerHTML = `<strong>AI Response:</strong> ${response}`;
+        }
+
+        // ================================================
+        // SEARCH
+        // ================================================
+        function handleGlobalSearch(term) {
+            AppState.searchTerm = term;
+            const resultsContainer = document.getElementById('searchResults');
+            if (!term.trim()) {
+                resultsContainer.classList.remove('active');
+                resultsContainer.innerHTML = '';
+                return;
+            }
+            const allData = [
+                ...DemoDB.customers.map(c => ({ type: 'Customer', label: c.name, sub: c.email, route: 'customers' })),
+                ...DemoDB.suppliers.map(s => ({ type: 'Supplier', label: s.name, sub: s.category, route: 'suppliers' })),
+                ...DemoDB.products.map(p => ({ type: 'Product', label: p.name, sub: p.sku, route: 'inventory' })),
+                ...DemoDB.invoices.map(i => ({ type: 'Invoice', label: i.id, sub: i.customer, route: 'invoices' })),
+                ...DemoDB.expenses.map(e => ({ type: 'Expense', label: e.vendor, sub: e.category, route: 'expenses' })),
+            ];
+            const matches = allData.filter(d => d.label.toLowerCase().includes(term.toLowerCase()) ||
+                (d.sub && d.sub.toLowerCase().includes(term.toLowerCase())));
+            if (matches.length === 0) {
+                resultsContainer.innerHTML = '<div class="p-1 text-sm text-muted" style="padding:0.75rem;">No results found</div>';
+                resultsContainer.classList.add('active');
+                return;
+            }
+            resultsContainer.innerHTML = matches.slice(0, 10).map(m =>
+                `<button class="search-result-item" onclick="navigateTo('${m.route}');closeSearch()">
+              <strong>${m.type}:</strong> ${m.label} ${m.sub ? `<span class="text-muted text-sm">(${m.sub})</span>` : ''}
+            </button>`
+            ).join('');
+            resultsContainer.classList.add('active');
+        }
+
+        function closeSearch() {
+            document.getElementById('searchResults').classList.remove('active');
+            document.getElementById('globalSearchInput').value = '';
+            AppState.searchTerm = '';
+        }
+
+        // ================================================
+        // NOTIFICATIONS
+        // ================================================
+        function showNotifications() {
+            openModal('Notifications',
+                AppState.notifications.map(n =>
+                    `<div class="mb-1" style="padding:0.625rem;border-bottom:1px solid var(--border-light);${n.unread?'background:var(--gray-50);':''}">
+                <div class="flex-between"><span class="text-sm font-bold">${n.text}</span>${n.unread?'<span class="badge dark">New</span>':''}</div>
+                <span class="text-muted" style="font-size:0.7rem;">${n.time}</span>
+              </div>`
+                ).join(''),
+                `<button class="btn btn-secondary btn-sm" onclick="markAllRead()">Mark all read</button>`
+            );
+        }
+
+        function markAllRead() {
+            AppState.notifications.forEach(n => n.unread = false);
+            closeModal();
+            showToast('All notifications marked as read', 'success');
+        }
+
+        // ================================================
+        // AUTHENTICATION
+        // ================================================
+        function handleLogin() {
+            const email = document.getElementById('loginEmail')?.value || AppState.user.email;
+            AppState.user.email = email;
+            AppState.isAuthenticated = true;
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('appShell').style.display = 'flex';
+            AppState.currentRoute = 'dashboard';
+            renderSidebar();
+            renderPage();
+            showToast('Welcome back, ' + AppState.user.name + '!', 'success');
+        }
+
+        function showLandingFeatures() {
+            document.getElementById('landingFeatures').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ================================================
+        // INITIALIZATION
+        // ================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show landing page by default
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('appShell').style.display = 'none';
+
+            // Setup sidebar toggle
+            window.toggleSidebar = toggleSidebar;
+            window.navigateTo = navigateTo;
+            window.showToast = showToast;
+            window.openModal = openModal;
+            window.closeModal = closeModal;
+            window.handleLogin = handleLogin;
+            window.handleGlobalSearch = handleGlobalSearch;
+            window.closeSearch = closeSearch;
+            window.showNotifications = showNotifications;
+            window.markAllRead = markAllRead;
+            window.showLandingFeatures = showLandingFeatures;
+            window.handleAIQuestion = handleAIQuestion;
+            window.calculateZakatFromModal = calculateZakatFromModal;
+
+            // Set sidebar default open on desktop
+            if (window.innerWidth > 768) {
+                AppState.sidebarOpen = true;
+            }
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.header-search')) {
+                closeSearch();
+            }
+        });
+
+        // Keyboard shortcut for search
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSearch();
+                closeModal();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('globalSearchInput')?.focus();
+            }
+        });
+
+        console.log('ISLAMIC BUSINESS OS — Prototype initialized');
+        console.log('Business Management, Built Around Islamic Principles.');
+    </script>
+</body>
+</html>
